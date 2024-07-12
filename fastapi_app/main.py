@@ -3,8 +3,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_limiter import FastAPILimiter
 
-from src.routes import auth, users
-from src.conf.config import settings
+from fastapi_app.src.routes import auth, users
+from fastapi_app.src.conf.config import settings
 
 app = FastAPI()
 

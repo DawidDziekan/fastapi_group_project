@@ -9,9 +9,9 @@ from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
-from src.database.db import get_db
-from src.repository import users as repository_users
-from src.conf.config import settings
+from fastapi_app.src.database.db import get_db
+from fastapi_app.src.repository import users as repository_users
+from fastapi_app.src.conf.config import settings
 
 
 class Auth:
