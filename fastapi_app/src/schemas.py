@@ -5,14 +5,14 @@ from pydantic import BaseModel, Field, EmailStr
 
 class UserModel(BaseModel):
     username: str = Field(min_length=5, max_length=16)
-    email: str
+    email: EmailStr
     password: str = Field(min_length=6, max_length=10)
 
 
 class UserDb(BaseModel):
     id: int
     username: str
-    email: str
+    email: EmailStr
     role: str
     created_at: datetime
     avatar: str

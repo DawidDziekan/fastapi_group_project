@@ -1,23 +1,24 @@
 from pydantic import BaseSettings
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 class Settings(BaseSettings):
-    sqlalchemy_database_url: str = (
-        "postgresql+psycopg2://user:password@localhost:5432/postgres"
-    )
-    secret_key: str = "*"
+    sqlalchemy_database_url: str = os.getenv('DATABASE_URL')
+    secret_key: str = os.getenv('SECRET_KEY')
     algorithm: str = "HS256"
-    mail_username: str = "*"
-    mail_password: str = "*"
-    mail_from: str = "*"
-    mail_port: int = 465
-    mail_server: str = "*"
-    redis_host: str = "localhost"
-    redis_port: int = 6379
-    redis_password: str = "*"
-    cloudinary_name: str = "*"
-    cloudinary_api_key: str = "*"
-    cloudinary_api_secret: str = "*"
+    mail_username: str = os.getenv('MAIL_USERNAME')
+    mail_password: str = os.getenv('MAIL_PASSWORD')
+    mail_from: str = os.getenv('MAIL_FROM')
+    mail_port: str = os.getenv('MAIL_PORT')
+    mail_server: str = os.getenv('MAIL_SERVER')
+    redis_host: str = os.getenv('REDIS_HOST')
+    redis_port: str = os.getenv('REDIS_PORT')
+    redis_password: str = os.getenv('REDIS_PASSWORD')
+    cloudinary_name: str = os.getenv('CLOUDINARY_CLOUD_NAME')
+    cloudinary_api_key: str = os.getenv('CLOUDINARY_API_KEY')
+    cloudinary_api_secret: str = os.getenv('CLOUDINARY_API_SECRET')
 
     class Config:
         env_file = ".env"
