@@ -16,6 +16,14 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 @router.get("/me/", response_model=UserDb)
 async def read_users_me(current_user: User = Depends(auth_service.get_current_user)):
+    """
+    Retrieves the current authenticated user's information.
+
+    :param current_user: The current user object.
+    :type current_user: User
+    :return: The current user's information.
+    :rtype: UserDb
+    """
     return current_user
 
 
@@ -25,6 +33,19 @@ async def update_avatar_user(
     current_user: User = Depends(auth_service.get_current_user),
     db: Session = Depends(get_db),
 ):
+    """
+    Updates the avatar of the current authenticated user.
+
+    :param file: The uploaded file containing the new avatar.
+    :type file: UploadFile
+    :param current_user: The current user object.
+    :type current_user: User
+    :param db: The database session.
+    :type db: Session
+    :return: The updated user object.
+    :rtype: UserDb
+    :raises HTTPException: If an error occurs while updating the avatar.
+    """
     cloudinary.config(
         cloud_name=settings.cloudinary_name,
         api_key=settings.cloudinary_api_key,
@@ -47,6 +68,17 @@ async def read_all_users(
     current_user: User = Depends(auth_service.get_current_user),
     db: Session = Depends(get_db)
 ):
+    """
+    Retrieves all users' information (admin access required).
+
+    :param current_user: The current user object.
+    :type current_user: User
+    :param db: The database session.
+    :type db: Session
+    :return: A list of all users.
+    :rtype: List[UserDb]
+    :raises HTTPException: If the current user does not have admin privileges.
+    """
     await auth_service.check_role(current_user, "admin")
     users = db.query(User).all()
     return users
@@ -58,6 +90,19 @@ async def delete_user(
     current_user: User = Depends(auth_service.get_current_user),
     db: Session = Depends(get_db)
 ):
+    """
+    Deletes a user by their ID (admin access required).
+
+    :param user_id: The ID of the user to be deleted.
+    :type user_id: int
+    :param current_user: The current user object.
+    :type current_user: User
+    :param db: The database session.
+    :type db: Session
+    :return: A message indicating the result of the deletion.
+    :rtype: dict
+    :raises HTTPException: If the user is not found or if the current user does not have admin privileges.
+    """
     await auth_service.check_role(current_user, "admin")
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
