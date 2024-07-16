@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from fastapi_app.src.database.db import get_db
 from fastapi_app.src.repository import users as repository_users
 from fastapi_app.src.conf.config import settings
-
+from fastapi_app.src.database.models import User
 
 class Auth:
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -25,7 +25,15 @@ class Auth:
         password=settings.redis_password,
         db=0,
     )
-
+    
+    def __init__(self):
+        self.role_hierarchy = {
+            "user": 1,
+            "moderator": 2,
+            "admin": 3
+        }
+        
+        
     def verify_password(self, plain_password, hashed_password) -> bool:
         """
         Compares a plain password with a hashed password to check if they match.
@@ -50,7 +58,6 @@ class Auth:
         """
         return self.pwd_context.hash(password)
 
-    # define a function to generate a new access token
     async def create_access_token(
         self, data: dict, expires_delta: Optional[float] = None
     ):
@@ -77,7 +84,6 @@ class Auth:
         )
         return encoded_access_token
 
-    # define a function to generate a new refresh token
     async def create_refresh_token(
         self, data: dict, expires_delta: Optional[float] = None
     ):
@@ -210,5 +216,20 @@ class Auth:
                 detail="Invalid token for email verification",
             )
 
+    async def check_role(self, current_user: User, required_role: str):
+        """
+        Checks if the current user has the required role to perform an operation.
+        
+        :param current_user: The current user.
+        :type current_user: User
+        :param required_role: The role required to perform the operation.
+        :type required_role: str
+        :raises HTTPException: If the user does not have the required role.
+        """
+        if self.role_hierarchy[current_user.role] < self.role_hierarchy[required_role]:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Operation not permitted",
+            )
 
 auth_service = Auth()

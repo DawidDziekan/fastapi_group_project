@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, status, UploadFile, File
+from fastapi import APIRouter, Depends, status, UploadFile, File, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
 import cloudinary
 import cloudinary.uploader
 
@@ -39,3 +40,28 @@ async def update_avatar_user(
     )
     user = await repository_users.update_avatar(current_user.email, src_url, db)
     return user
+
+# New routes for admins and moderators
+@router.get("/all", response_model=List[UserDb])
+async def read_all_users(
+    current_user: User = Depends(auth_service.get_current_user),
+    db: Session = Depends(get_db)
+):
+    await auth_service.check_role(current_user, "admin")
+    users = db.query(User).all()
+    return users
+
+
+@router.delete("/{user_id}", response_model=dict)
+async def delete_user(
+    user_id: int,
+    current_user: User = Depends(auth_service.get_current_user),
+    db: Session = Depends(get_db)
+):
+    await auth_service.check_role(current_user, "admin")
+    user = db.query(User).filter(User.id == user_id).first()
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    db.delete(user)
+    db.commit()
+    return {"detail": "User deleted"}

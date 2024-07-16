@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     mail_server: str = os.getenv('MAIL_SERVER')
     redis_host: str = os.getenv('REDIS_HOST')
     redis_port: str = os.getenv('REDIS_PORT')
-    redis_password: str = os.getenv('REDIS_PASSWORD')
+    redis_password: str = os.getenv('REDIS_PASSWORD', None)
     cloudinary_name: str = os.getenv('CLOUDINARY_CLOUD_NAME')
     cloudinary_api_key: str = os.getenv('CLOUDINARY_API_KEY')
     cloudinary_api_secret: str = os.getenv('CLOUDINARY_API_SECRET')
