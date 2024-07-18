@@ -14,10 +14,12 @@ conf = ConnectionConfig(
     MAIL_PORT=settings.mail_port,
     MAIL_SERVER=settings.mail_server,
     MAIL_FROM_NAME="fastapi app team",
-    MAIL_STARTTLS=False,
-    MAIL_SSL_TLS=True,
+    MAIL_STARTTLS=True,#False, dla gmail
+    MAIL_SSL_TLS=False,#True, dla gmail
     USE_CREDENTIALS=True,
     VALIDATE_CERTS=True,
+    # MAIL_STARTTLS=True,
+    # MAIL_SSL_TLS=False,
     TEMPLATE_FOLDER=Path(__file__).parent / 'templates',
 )
 

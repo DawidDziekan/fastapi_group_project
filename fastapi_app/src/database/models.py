@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, func, Table, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Boolean, func, Table, Float, UniqueConstraint
 from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import DateTime
@@ -23,6 +23,10 @@ class User(Base):
     refresh_token = Column(String(255), nullable=True)
     confirmed = Column(Boolean, default=False)
 
+    # Relacja do komentarzy
+    comments = relationship("Comment", back_populates="user")
+    photos = relationship("Photo", back_populates="user")
+
 class Photo(Base):
     __tablename__ = 'photos'
 
@@ -32,6 +36,11 @@ class Photo(Base):
     description = Column(String)
     tags = relationship("Tag", secondary=photo_tag_table)
     created_at = Column(DateTime, server_default=func.now())
+    rating = Column(Float, default=0.0)  # Dodanie kolumny rating
+
+    # Relacje do użytkownika i komentarzy
+    user = relationship("User", back_populates="photos")
+    comments = relationship("Comment", back_populates="photo", cascade="all, delete")
 
 class Tag(Base):
     __tablename__ = 'tags'
@@ -48,4 +57,8 @@ class Comment(Base):
     content = Column(String)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    # Relacje do użytkownika i zdjęcia
+    user = relationship("User", back_populates="comments")
+    photo = relationship("Photo", back_populates="comments")
 
