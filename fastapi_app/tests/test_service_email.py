@@ -30,5 +30,3 @@ async def test_send_email(mock_fastmail):
 
 if __name__ == "__main__":
     pytest.main()
-
-# pytest tests/test_service_email.py -v
