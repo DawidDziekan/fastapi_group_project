@@ -46,7 +46,7 @@ async def test_create_access_token(mock_auth, mock_db, mock_redis):
     mock_auth.SECRET_KEY = "test_secret"
     mock_auth.ALGORITHM = "HS256"
     data = {"sub": "test@example.com"}
-    expires_delta = 3600  # 1 hour
+    expires_delta = 3600
 
     token = await mock_auth.create_access_token(data, expires_delta)
 
@@ -58,7 +58,7 @@ async def test_create_refresh_token(mock_auth, mock_db, mock_redis):
     mock_auth.SECRET_KEY = "test_secret"
     mock_auth.ALGORITHM = "HS256"
     data = {"sub": "test@example.com"}
-    expires_delta = 86400  # 1 day
+    expires_delta = 86400
 
     token = await mock_auth.create_refresh_token(data, expires_delta)
 
@@ -70,7 +70,7 @@ async def test_decode_refresh_token(mock_auth, mock_db, mock_redis):
     mock_auth.SECRET_KEY = "test_secret"
     mock_auth.ALGORITHM = "HS256"
     data = {"sub": "test@example.com"}
-    expires_delta = 86400  # 1 day
+    expires_delta = 86400
 
     refresh_token = await mock_auth.create_refresh_token(data, expires_delta)
     decoded_email = await mock_auth.decode_refresh_token(refresh_token)
@@ -90,4 +90,3 @@ async def test_check_role(mock_auth, mock_db, mock_redis):
 if __name__ == "__main__":
     pytest.main()
 
-# pytest tests/test_service_auth.py -v
