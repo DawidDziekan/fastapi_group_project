@@ -110,3 +110,37 @@ async def delete_user(
     db.delete(user)
     db.commit()
     return {"detail": "User deleted"}
+
+
+@router.patch("/{user_id}/role", response_model=UserDb)
+async def update_user_role(
+    user_id: int,
+    role: str,
+    current_user: User = Depends(auth_service.get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Updates the role of a user (admin access required).
+
+    :param user_id: The ID of the user whose role is to be updated.
+    :type user_id: int
+    :param role: The new role to assign to the user.
+    :type role: str
+    :param current_user: The current user object.
+    :type current_user: User
+    :param db: The database session.
+    :type db: Session
+    :return: The updated user object.
+    :rtype: UserDb
+    :raises HTTPException: If the user is not found or if the current user does not have admin privileges.
+    """
+    await auth_service.check_role(current_user, "admin")
+    user = db.query(User).filter(User.id == user_id).first()
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    if role not in ["user", "moderator"]:
+        raise HTTPException(status_code=400, detail="Invalid role")
+    user.role = role
+    db.commit()
+    db.refresh(user)
+    return user
