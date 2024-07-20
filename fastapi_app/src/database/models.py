@@ -52,7 +52,7 @@ class Image(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=None, onupdate=func.now())
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
-    tags = relationship("Tag", secondary=image_m2m_tag, backref="images")
+    tags = relationship("Tag", secondary=photo_tag_table, backref="images")
     notes = relationship('Note', backref='images')
     opinions = relationship("Opinion", backref="image")
 
