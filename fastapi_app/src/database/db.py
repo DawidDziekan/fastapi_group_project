@@ -11,6 +11,15 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Dependency
 def get_db():
+    """
+    Provides a database session to be used in a dependency injection context.
+
+    This function is intended to be used with FastAPI's dependency injection system.
+    It yields a SQLAlchemy session that is automatically closed after the request is finished.
+
+    :yield: A SQLAlchemy database session.
+    :rtype: sqlalchemy.orm.Session
+    """
     db = SessionLocal()
     try:
         yield db

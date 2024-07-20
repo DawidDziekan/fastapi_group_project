@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-from pydantic import BaseModel, Field, EmailStr, HttpUrl
+from pydantic import BaseModel, Field, EmailStr
 
 
 class UserModel(BaseModel):
@@ -36,16 +36,17 @@ class RequestEmail(BaseModel):
     email: EmailStr
 
 
-# Komentarze
-##########################################
 class CommentBase(BaseModel):
     content: str
+
 
 class CommentCreate(CommentBase):
     pass
 
+
 class CommentUpdate(CommentBase):
     pass
+
 
 class Comment(CommentBase):
     id: int
@@ -56,17 +57,16 @@ class Comment(CommentBase):
 
     class Config:
         orm_mode = True
-##########################################
 
 
-# Wyszukiwanie i filtrowanie
-##########################################
 class PhotoBase(BaseModel):
     url: str
     description: Optional[str] = None
 
+
 class PhotoCreate(PhotoBase):
     pass
+
 
 class Photo(PhotoBase):
     id: int
@@ -76,6 +76,7 @@ class Photo(PhotoBase):
     class Config:
         orm_mode = True
 
+
 class PhotoSearch(BaseModel):
     keywords: Optional[str] = None
     tags: Optional[List[str]] = None
@@ -84,6 +85,6 @@ class PhotoSearch(BaseModel):
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
 
+
 class UserPhotoSearch(PhotoSearch):
     user_id: Optional[int] = None
-##########################################

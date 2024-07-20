@@ -21,6 +21,21 @@ async def signup(
     request: Request,
     db: Session = Depends(get_db),
 ):
+    """
+    Registers a new user.
+
+    :param body: The user registration details.
+    :type body: UserModel
+    :param background_tasks: Background tasks for asynchronous operations.
+    :type background_tasks: BackgroundTasks
+    :param request: The request object.
+    :type request: Request
+    :param db: The database session.
+    :type db: Session
+    :return: The newly created user and a confirmation message.
+    :rtype: UserResponse
+    :raises HTTPException: If the user already exists.
+    """
     exist_user = await repository_users.get_user_by_email(body.email, db)
     if exist_user:
         raise HTTPException(
@@ -41,6 +56,17 @@ async def signup(
 async def login(
     body: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
+    """
+    Authenticates a user and returns JWT tokens.
+
+    :param body: The login details.
+    :type body: OAuth2PasswordRequestForm
+    :param db: The database session.
+    :type db: Session
+    :return: The access and refresh tokens.
+    :rtype: TokenModel
+    :raises HTTPException: If the user is not found, email is not confirmed, or password is invalid.
+    """
     user = await repository_users.get_user_by_email(body.username, db)
     if user is None:
         raise HTTPException(
@@ -70,6 +96,17 @@ async def refresh_token(
     credentials: HTTPAuthorizationCredentials = Security(security),
     db: Session = Depends(get_db),
 ):
+    """
+    Refreshes the JWT tokens.
+
+    :param credentials: The HTTP authorization credentials.
+    :type credentials: HTTPAuthorizationCredentials
+    :param db: The database session.
+    :type db: Session
+    :return: The new access and refresh tokens.
+    :rtype: TokenModel
+    :raises HTTPException: If the refresh token is invalid.
+    """
     token = credentials.credentials
     email = await auth_service.decode_refresh_token(token)
     user = await repository_users.get_user_by_email(email, db)
@@ -91,6 +128,17 @@ async def refresh_token(
 
 @router.get("/confirmed_email/{token}")
 async def confirmed_email(token: str, db: Session = Depends(get_db)):
+    """
+    Confirms a user's email address.
+
+    :param token: The confirmation token.
+    :type token: str
+    :param db: The database session.
+    :type db: Session
+    :return: A confirmation message.
+    :rtype: dict
+    :raises HTTPException: If the verification fails or user is not found.
+    """
     email = await auth_service.get_email_from_token(token)
     user = await repository_users.get_user_by_email(email, db)
     if user is None:
@@ -110,6 +158,20 @@ async def request_email(
     request: Request,
     db: Session = Depends(get_db),
 ):
+    """
+    Requests email confirmation for a user.
+
+    :param body: The email request details.
+    :type body: RequestEmail
+    :param background_tasks: Background tasks for asynchronous operations.
+    :type background_tasks: BackgroundTasks
+    :param request: The request object.
+    :type request: Request
+    :param db: The database session.
+    :type db: Session
+    :return: A message indicating the result of the request.
+    :rtype: dict
+    """
     user = await repository_users.get_user_by_email(body.email, db)
 
     if user.confirmed:
