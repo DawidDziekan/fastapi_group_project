@@ -9,7 +9,7 @@ from fastapi_app.src.database.models import User
 from fastapi_app.src.repository import users as repository_users
 from fastapi_app.src.services.auth import auth_service
 from fastapi_app.src.conf.config import settings
-from fastapi_app.src.schemas import UserDb
+from fastapi_app.src.schemas import UserDb, ProfileStatusUpdate, ProfileResponse
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -110,3 +110,33 @@ async def delete_user(
     db.delete(user)
     db.commit()
     return {"detail": "User deleted"}
+
+@router.get("/{username}", response_model=ProfileResponse)
+async def read_user(username: str,db: Session = Depends(get_db)):
+    """
+    Retrieves the current authenticated user's information.
+
+    :param current_user: The current user object.
+    :type current_user: User
+    :return: The current user's information.
+    :rtype: UserDb
+    """
+    profile = await repository_users.get_profile(username, db)
+    if profile is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    return profile
+
+
+@router.patch("/{username}", response_model=UserDb)
+async def update_user_profile(body: ProfileStatusUpdate, username: str, db: Session = Depends(get_db),
+                             current_user: User = Depends(auth_service.get_current_user)):
+    user = await repository_users.update_user_profile(username, body, current_user, db)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    return user
+
+@router.delete("/{username}/ban", response_model=UserDb)
+async def ban_user(username: str, db: Session = Depends(get_db),
+                             current_user: User = Depends(auth_service.get_current_user)):
+    response = await repository_users.ban_user(username, current_user, db)
+    return response
