@@ -67,7 +67,7 @@ async def login(
     :rtype: TokenModel
     :raises HTTPException: If the user is not found, email is not confirmed, or password is invalid.
     """
-    user = await repository_users.get_user_by_email(body.username, db)
+    user = await repository_users.get_user_by_username(body.username, db)
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email"

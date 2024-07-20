@@ -88,3 +88,20 @@ class PhotoSearch(BaseModel):
 
 class UserSearch(BaseModel):
     user_id: int
+
+
+class ProfileResponse(BaseModel):
+    username: str
+    email: EmailStr
+    role: str
+    created_at: datetime
+    avatar: str
+    photo_amount: int
+
+    class Config:
+        orm_mode = True
+
+class ProfileStatusUpdate(BaseModel):
+    username: str
+    password: str
+    avatar: str

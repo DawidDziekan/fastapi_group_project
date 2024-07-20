@@ -1,8 +1,9 @@
 from libgravatar import Gravatar
 from sqlalchemy.orm import Session
 
-from fastapi_app.src.database.models import User
-from fastapi_app.src.schemas import UserModel
+from fastapi_app.src.database.models import User, Photo
+from fastapi_app.src.schemas import UserModel, ProfileStatusUpdate
+from fastapi_app.src.services.auth import auth_service
 
 
 async def get_user_by_email(email: str, db: Session) -> User:
@@ -18,6 +19,18 @@ async def get_user_by_email(email: str, db: Session) -> User:
     """
     return db.query(User).filter(User.email == email).first()
 
+async def get_user_by_username(username: str, db: Session) -> User:
+    """
+    Retrieves a user by their username.
+
+    :param username: The username of the user.
+    :type username: str
+    :param db: The database session.
+    :type db: Session
+    :return: The user object if found, otherwise None.
+    :rtype: User
+    """
+    return db.query(User).filter(User.username == username).first()
 
 async def create_user(body: UserModel, db: Session) -> User:
     """
@@ -95,4 +108,38 @@ async def update_avatar(email, url: str, db: Session) -> User:
     user = await get_user_by_email(email, db)
     user.avatar = url
     db.commit()
+    return user
+
+async def get_profile(username: str, db: Session):
+    user_information = db.query(User).filter(User.username==username).first()
+    if not user_information:
+        return None
+    amount_of_user_photos = db.query(Photo).filter(Photo.user_id==user_information.id).count()
+    profile_information = {
+                            'username':     user_information.username,
+                            'avatar':       user_information.avatar,
+                            'created_at':   user_information.created_at,
+                            'email':        user_information.email,
+                            'role':         user_information.role,
+                            'photo_amount': amount_of_user_photos
+    }
+    return profile_information
+
+async def ban_user(username: str, current_user: User, db: Session):
+    if current_user.role!="admin":
+        return None
+    user = db.query(User).filter(User.username==username).first()
+    db.delete(user)
+    db.commit()
+    return user
+
+async def update_user_profile(username: str,body: ProfileStatusUpdate, current_user: User, db: Session):
+    if current_user.username!=username:
+        return None
+    user = db.query(User).filter(User.username==username).first()
+    if user:
+        if body.username: user.username=body.username
+        if body.password: user.password=auth_service.get_password_hash(body.password)
+        if body.avatar: user.avatar=body.avatar
+        db.commit()
     return user

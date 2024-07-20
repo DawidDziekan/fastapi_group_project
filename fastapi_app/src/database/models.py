@@ -14,7 +14,7 @@ photo_tag_table = Table(
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
-    username = Column(String(50))
+    username = Column(String(50), primary_key=True)
     email = Column(String(250), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
     role = Column(String, default="user")
