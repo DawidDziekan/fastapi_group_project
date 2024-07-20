@@ -3,8 +3,10 @@ from uuid import uuid4
 from fastapi_app.src.database.models import Photo, User
 from fastapi_app.src.services.photo_service import PhotoService
 from fastapi_app.src.services.auth import auth_service
+from fastapi_app.src.database.db import get_db
 import aiofiles
 import os
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -23,32 +25,32 @@ async def save_photo(file: UploadFile) -> str:
     return file_path
 
 @router.post("/photos/")
-async def create_photo(description: str, file: UploadFile = File(...)):
+async def create_photo(description: str, file: UploadFile = File(...), current_user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
     file_path = await save_photo(file)
-    photo = Photo(description=description, url=file_path)
-    saved_photo = PhotoService.save(photo)
+    photo = Photo(description=description, url=file_path, user_id=current_user.id)
+    saved_photo = PhotoService.save(db, photo)
     return saved_photo
 
 @router.put("/photos/{photo_id}")
-async def update_photo(photo_id: int, description: str):
+async def update_photo(photo_id: int, description: str, db: Session = Depends(get_db)):
     try:
-        updated_photo = PhotoService.update(photo_id, description)
+        updated_photo = PhotoService.update(db, photo_id, description)
         return updated_photo
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
 @router.delete("/photos/{photo_id}")
-async def delete_photo(photo_id: int):
+async def delete_photo(photo_id: int, db: Session = Depends(get_db)):
     try:
-        PhotoService.delete(photo_id)
+        PhotoService.delete(db, photo_id)
         return {"detail": "Photo deleted"}
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
 @router.get("/photos/{photo_id}")
-async def read_photo(photo_id: int):
+async def read_photo(photo_id: int, db: Session = Depends(get_db)):
     try:
-        photo = PhotoService.get(photo_id)
+        photo = PhotoService.get(db, photo_id)
         return photo
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))

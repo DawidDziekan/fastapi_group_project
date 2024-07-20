@@ -86,5 +86,5 @@ class PhotoSearch(BaseModel):
     end_date: Optional[datetime] = None
 
 
-class UserPhotoSearch(PhotoSearch):
-    user_id: Optional[int] = None
+class UserSearch(BaseModel):
+    user_id: int
