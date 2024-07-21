@@ -4,9 +4,11 @@ from fastapi_app.src.database.models import Photo, User
 from fastapi_app.src.services.photo_service import PhotoService
 from fastapi_app.src.services.auth import auth_service
 from fastapi_app.src.database.db import get_db
+from fastapi_app.src.repository.tags import create_tags
 import aiofiles
 import os
 from sqlalchemy.orm import Session
+from typing import Optional
 
 router = APIRouter()
 
@@ -25,9 +27,10 @@ async def save_photo(file: UploadFile) -> str:
     return file_path
 
 @router.post("/photos/")
-async def create_photo(description: str, file: UploadFile = File(...), current_user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
+async def create_photo(description: str, tags: Optional[str] = None, file: UploadFile = File(...), current_user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
     file_path = await save_photo(file)
-    photo = Photo(description=description, url=file_path, user_id=current_user.id)
+    tags = await create_tags([tag for tag in tags.split(' ')])
+    photo = Photo(description=description, url=file_path, tags=tags, user_id=current_user.id)
     saved_photo = PhotoService.save(db, photo)
     return saved_photo
 
