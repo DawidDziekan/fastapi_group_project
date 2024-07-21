@@ -140,6 +140,17 @@ async def update_user_profile(username: str,body: ProfileStatusUpdate, current_u
     if user:
         if body.username: user.username=body.username
         if body.password: user.password=auth_service.get_password_hash(body.password)
-        if body.avatar: user.avatar=body.avatar
         db.commit()
     return user
+
+async def get_current_user_profile(user: User, db: Session):
+    amount_of_user_photos = db.query(Photo).filter(Photo.user_id==user.id).count()
+    profile_information = {
+                            'username':     user.username,
+                            'avatar':       user.avatar,
+                            'created_at':   user.created_at,
+                            'email':        user.email,
+                            'role':         user.role,
+                            'photo_amount': amount_of_user_photos
+    }
+    return profile_information

@@ -15,7 +15,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/me/", response_model=UserDb)
-async def read_users_me(current_user: User = Depends(auth_service.get_current_user)):
+async def read_users_me(current_user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
     """
     Retrieves the current authenticated user's information.
 
@@ -24,6 +24,7 @@ async def read_users_me(current_user: User = Depends(auth_service.get_current_us
     :return: The current user's information.
     :rtype: UserDb
     """
+    repository_users.get_current_user_profile(current_user, db)
     return current_user
 
 
