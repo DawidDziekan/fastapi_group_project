@@ -62,6 +62,7 @@ class Comment(CommentBase):
 class PhotoBase(BaseModel):
     url: str
     description: Optional[str] = None
+    tags: Optional[str]
 
 
 class PhotoCreate(PhotoBase):
