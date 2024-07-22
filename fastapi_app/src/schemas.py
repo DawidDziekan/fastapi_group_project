@@ -65,12 +65,127 @@ class RequestEmail(BaseModel):
     """
     email: EmailStr
 
+class CommentBase(BaseModel):
+    """
+    Commend Base Model
+    :param content: str: comment to the photo
+    """
+    content: str
 
-class Opinion(BaseModel):
+
+class CommentCreate(CommentBase):
     """
-    Opinion Model
-    :param vote: int : user opinion about the selected image. Accepted only numbers: 1,2,3,4,5 where 1 means the worst image and 5 means the best image.
-    :param image_id: the unique image number
+    Comment Create Model
     """
-    vote: int
-    image_id: int
+    pass
+
+
+class CommentUpdate(CommentBase):
+    """
+    Comment Update Model
+    """
+    pass
+
+
+class Comment(CommentBase):
+    """
+    Comment Model
+    :param id: int: comment id number
+    :param created_at: date and time of comment creation
+    :para updated_at: date and time the comment was updated
+    :param user_id: int: user id
+    :param photo_id: int: photo id
+    """
+    id: int
+    created_at: datetime
+    updated_at: datetime
+    user_id: int
+    photo_id: int
+
+    class Config:
+        orm_mode = True
+
+
+class PhotoBase(BaseModel):
+    """
+    Photo Base Model
+    :param url: str: ulr adress to the photo
+    :param description: description of the selected photo
+    :param tags: tags associated with the selected image
+    """
+    url: str
+    description: Optional[str] = None
+    tags: Optional[str]
+
+
+class PhotoCreate(PhotoBase):
+    """
+    Photo Create Model
+    """
+    pass
+
+
+class Photo(PhotoBase):
+    """
+    Photo Model
+    :param id: int: photo's id numeber
+    :param user_id: int: user id number
+    :param created_at: date and time of photo's creation 
+    """
+    id: int
+    user_id: int
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class PhotoSearch(BaseModel):
+    """
+    Photo Search Model: 
+    """
+    keywords: Optional[str] = None
+    tags: Optional[List[str]] = None
+    min_rating: Optional[float] = None
+    max_rating: Optional[float] = None
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+
+
+class UserSearch(BaseModel):
+    """
+    User Search Model
+    :param user_id: int: user's id
+    """
+    user_id: int
+
+
+class ProfileResponse(BaseModel):
+    """
+    Profile Response Model
+    :param username: str: username
+    :para email: user's email addres
+    :param role: str: the role of the user: administrator, standard user or modelator
+    :param avatar: str: link to the user's avatar 
+    :param photo_amount: int: number of images for a selected user
+    """
+    username: str
+    email: EmailStr
+    role: str
+    created_at: datetime
+    avatar: str
+    photo_amount: int
+
+    class Config:
+        orm_mode = True
+
+class ProfileStatusUpdate(BaseModel):
+    """
+    Profile Status Update Model
+    :param username: str: username
+    :param password: : str: password of the user
+    :param avatar: str: link to the user's avatar 
+     """
+    username: str
+    password: str
+    avatar: str

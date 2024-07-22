@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, func, Table, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Boolean, func, Table, UniqueConstraint, Float
 from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import DateTime
@@ -34,27 +34,33 @@ class User(Base):
     refresh_token = Column(String(255), nullable=True)
     confirmed = Column(Boolean, default=False)
 
-class Image(Base):
-    """Class which describes table in database of the Image
-    :param id:int: image unique id in DB
-    :param image_name: str: name of the image which is putting in DB
-    :param image_link: link to the image
-    :param created_at: date: the date of the image creation - format: YYYY-MM-DD HH:MM:SS where Y-means year, M - means month, D- means day H - means hour, M - means minutes and S - means seconds
-    :param updated_at: date: the date of the image updating - format: YYYY-MM-DD HH:MM:SS where Y-means year, M - means month, D- means day H - means hour, M - means minutes and S - means seconds
+class Photo(Base):
+    """Class which describes table in database of the Photo
+    :param id:int: photo unique id in DB
     :param user_id: int: id number of the user who entered the image into the DB
-    :param tags: tags about the image which is putting in DB. Relation 'many to many' - many tags to one images and one tag to many images.
+    :param url: url adress to the photo
+    :param description: str: description of the photo
+    :param tags: tags about the photo which is putting in DB. Relation 'many to many' - many tags to one photo and one tag to many photos.
+    :param created_at: the date and time of the photo creation - format: YYYY-MM-DD HH:MM:SS where Y-means year, M - means month, D- means day H - means hour, M - means minutes and S - means seconds
+    :param updated_at: the date and time of the photo updating - format: YYYY-MM-DD HH:MM:SS where Y-means year, M - means month, D- means day H - means hour, M - means minutes and S - means seconds
+    :param rating: float: rating
+    :param user: Relation between user and photo
+    :param commends: Relation between comment and photo
+
+
     :param notes: the comment about the image which is putting in DB. Relation 'many to one' - many comments to one image.
     """
-    __tablename__ = "images"
+    __tablename__ = "photos"
     id = Column(Integer, primary_key=True, index=True)
-    image_name = Column(String(50), nullable=False)
-    image_link = Column(String(250), nullable=False)
-    created_at = Column(DateTime, default=func.now())
+    user_id = Column(Integer, ForeignKey('users.id'))
+    url = Column(String)
+    description = Column(String)
+    tags = relationship("Tag", secondary=photo_tag_table)
+    created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, default=None, onupdate=func.now())
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
-    tags = relationship("Tag", secondary=photo_tag_table, backref="images")
-    notes = relationship('Note', backref='images')
-    opinions = relationship("Opinion", backref="image")
+    rating = Column(Float, default=0.0)
+    user = relationship("User", back_populates="photos")
+    comments = relationship("Comment", back_populates="photo", cascade="all, delete")
 
 class Tag(Base):
     """
