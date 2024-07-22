@@ -1,9 +1,11 @@
 import redis.asyncio as redis
-from fastapi import FastAPI, HTTPException
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from fastapi_limiter import FastAPILimiter
 
-from fastapi_app.src.routes import auth, users
+from fastapi_app.src.routes import auth, users, comments, search_filter, photos
 from fastapi_app.src.conf.config import settings
 
 app = FastAPI()
@@ -20,6 +22,9 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
+app.include_router(photos.router, prefix="/api")
+app.include_router(comments.router, prefix="/api")
+app.include_router(search_filter.router, prefix="/api")
 
 
 @app.on_event("startup")

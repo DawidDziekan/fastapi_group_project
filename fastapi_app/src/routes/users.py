@@ -9,13 +9,13 @@ from fastapi_app.src.database.models import User
 from fastapi_app.src.repository import users as repository_users
 from fastapi_app.src.services.auth import auth_service
 from fastapi_app.src.conf.config import settings
-from fastapi_app.src.schemas import UserDb
+from fastapi_app.src.schemas import UserDb, ProfileStatusUpdate, ProfileResponse
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/me/", response_model=UserDb)
-async def read_users_me(current_user: User = Depends(auth_service.get_current_user)):
+async def read_users_me(current_user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
     """
     Retrieves the current authenticated user's information.
 
@@ -24,6 +24,7 @@ async def read_users_me(current_user: User = Depends(auth_service.get_current_us
     :return: The current user's information.
     :rtype: UserDb
     """
+    repository_users.get_current_user_profile(current_user, db)
     return current_user
 
 
@@ -110,3 +111,68 @@ async def delete_user(
     db.delete(user)
     db.commit()
     return {"detail": "User deleted"}
+
+
+
+@router.patch("/{user_id}/role", response_model=UserDb)
+async def update_user_role(
+    user_id: int,
+    role: str,
+    current_user: User = Depends(auth_service.get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Updates the role of a user (admin access required).
+
+    :param user_id: The ID of the user whose role is to be updated.
+    :type user_id: int
+    :param role: The new role to assign to the user.
+    :type role: str
+    :param current_user: The current user object.
+    :type current_user: User
+    :param db: The database session.
+    :type db: Session
+    :return: The updated user object.
+    :rtype: UserDb
+    :raises HTTPException: If the user is not found or if the current user does not have admin privileges.
+    """
+    await auth_service.check_role(current_user, "admin")
+    user = db.query(User).filter(User.id == user_id).first()
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    if role not in ["user", "moderator"]:
+        raise HTTPException(status_code=400, detail="Invalid role")
+    user.role = role
+    db.commit()
+    db.refresh(user)
+    return user
+
+@router.get("/{username}", response_model=ProfileResponse)
+async def read_user(username: str,db: Session = Depends(get_db)):
+    """
+    Retrieves the current authenticated user's information.
+
+    :param current_user: The current user object.
+    :type current_user: User
+    :return: The current user's information.
+    :rtype: UserDb
+    """
+    profile = await repository_users.get_profile(username, db)
+    if profile is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    return profile
+
+@router.patch("/{username}", response_model=UserDb)
+async def update_user_profile(body: ProfileStatusUpdate, username: str, db: Session = Depends(get_db),
+                             current_user: User = Depends(auth_service.get_current_user)):
+    user = await repository_users.update_user_profile(username, body, current_user, db)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    return user
+
+@router.delete("/{username}/ban", response_model=UserDb)
+async def ban_user(username: str, db: Session = Depends(get_db),
+                             current_user: User = Depends(auth_service.get_current_user)):
+    response = await repository_users.ban_user(username, current_user, db)
+    return response
+

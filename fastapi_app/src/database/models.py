@@ -24,8 +24,8 @@ class User(Base):
     :param confirmed: boolean: information if the user is confirmed by mail
     """
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String(50), unique=True)
     email = Column(String(250), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
     role = Column(String, default="user")
@@ -33,6 +33,8 @@ class User(Base):
     avatar = Column(String(255), nullable=True)
     refresh_token = Column(String(255), nullable=True)
     confirmed = Column(Boolean, default=False)
+    comments = relationship("Comment", back_populates="user")
+    photos = relationship("Photo", back_populates="user")
 
 class Photo(Base):
     """Class which describes table in database of the Photo
@@ -88,6 +90,8 @@ class Comment(Base):
     content = Column(String)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+    user = relationship("User", back_populates="comments")
+    photo = relationship("Photo", back_populates="comments")
 
 
 class Opinion(Base):
