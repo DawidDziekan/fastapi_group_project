@@ -64,7 +64,7 @@ class RequestEmail(BaseModel):
     : param email: email adress
     """
     email: EmailStr
-
+      
 class CommentBase(BaseModel):
     """
     Commend Base Model
