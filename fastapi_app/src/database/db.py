@@ -3,7 +3,6 @@ from sqlalchemy.orm import sessionmaker
 
 from fastapi_app.src.conf.config import settings
 
-
 SQLALCHEMY_DATABASE_URL = settings.sqlalchemy_database_url
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
