@@ -17,6 +17,26 @@ fastapi_app main
   :undoc-members:
   :show-inheritance:
 
+fastapi_app src repository Comments
+=========================================================================================================
+.. automodule:: src.repository.comments
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+fastapi_app src repository Search_filter
+=========================================================================================================
+.. automodule:: src.repository.search_filter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+fastapi_app src repository Tags
+=========================================================================================================
+.. automodule:: src.repository.tags
+  :members:
+  :undoc-members:
+  :show-inheritance:
 
 fastapi_app src repository Users
 =========================================================================================================
@@ -31,6 +51,21 @@ fastapi_app src routes Auth
   :members:
   :undoc-members:
   :show-inheritance:
+
+fastapi_app src routes Comments
+==========================================================================================================
+.. automodule:: src.routes.comments
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+fastapi_app src routes Photos
+==========================================================================================================
+.. automodule:: src.routes.photos
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
 
 fastapi_app src routes Users
 ============================================================================================================
