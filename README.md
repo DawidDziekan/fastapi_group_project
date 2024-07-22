@@ -3,9 +3,11 @@
  
 
 
-DO IT TO RUN:
+## DO IT TO RUN:
 
 CL - means Commend line
+
+Use the 'Dockerfile' so that the program can run in a Docker container. Remember to run container before steps below.
 
 1. Create '.env' file in 'fastapi_app' folder.
 2. Next, in CL write : poetry shell
@@ -23,3 +25,6 @@ CL - means Commend line
 14. Open a web browser and go to: http://localhost:8000/docs.
 
 
+## MANUAL
+
+To read documentation about this aplication take a look to the file "fastapi_group_project\docs\_build\html\index.html".
