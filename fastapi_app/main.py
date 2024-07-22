@@ -24,6 +24,9 @@ app.include_router(users.router, prefix="/api")
 
 @app.on_event("startup")
 async def startup():
+    """
+    The function creates a connection to the Redis server and initializes the FastAPI query limiter.
+    """
     r = await redis.Redis(
         host=settings.redis_host,
         port=settings.redis_port,
@@ -37,4 +40,7 @@ async def startup():
 
 @app.get("/")
 def read_root():
+    """
+    The function displays the text 'Hello World'
+    """
     return {"message": "Hello World"}
