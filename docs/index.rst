@@ -17,6 +17,21 @@ fastapi_app main
   :undoc-members:
   :show-inheritance:
 
+fastapi_app src database db
+============================================================================================================
+.. automodule:: src.database.db
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+
+.. fastapi_app src database models
+.. ============================================================================================================
+.. .. automodule:: src.database.models
+..   :members:
+..   :undoc-members:
+..   :show-inheritance:
+
 fastapi_app src repository Comments
 =========================================================================================================
 .. automodule:: src.repository.comments
