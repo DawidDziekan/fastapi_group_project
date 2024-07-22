@@ -46,9 +46,6 @@ class Photo(Base):
     :param rating: float: rating
     :param user: Relation between user and photo
     :param commends: Relation between comment and photo
-
-
-    :param notes: the comment about the image which is putting in DB. Relation 'many to one' - many comments to one image.
     """
     __tablename__ = "photos"
     id = Column(Integer, primary_key=True, index=True)
