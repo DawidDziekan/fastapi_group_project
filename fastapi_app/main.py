@@ -46,6 +46,8 @@ async def startup():
 @app.get("/")
 def read_root():
     """
-    The function displays the text 'Hello World'
+    The function displays welcome message.
+    
+    :return: The text 'Hello World'
     """
     return {"message": "Hello World"}
