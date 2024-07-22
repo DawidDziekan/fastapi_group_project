@@ -20,3 +20,6 @@ CL - means Commend line
 11. Cornfirme by ENTER buttom
 12. To run API server type in CL: uvicorn main:app --host localhost --port 8000 --reload
 13. Cornfirme by ENTER buttom
+14. Open a web browser and go to: http://localhost:8000/docs.
+
+
