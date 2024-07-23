@@ -18,17 +18,11 @@ Use the 'Dockerfile' so that the program can run in a Docker container. Remember
 7. Confirme by ENTER buttom
 8. Type in CL cd..
 9. Confirme by ENTER buttom
-10. To enter the correct folder in CL type : cd docs
+10. To enter the correct folder in CL type : cd fastapi_app
 11. Confirme by ENTER buttom
-12. Then, type in CL: .\make.bat html
+12. To run API server type in CL: uvicorn main:app --host localhost --port 8000 --reload
 13. Confirme by ENTER buttom
-14. Type in CL cd..
-15. Confirme by ENTER buttom
-16. To enter the correct folder in CL type : cd fastapi_app
-17. Confirme by ENTER buttom
-18. To run API server type in CL: uvicorn main:app --host localhost --port 8000 --reload
-19. Confirme by ENTER buttom
-20. Open a web browser and go to: http://localhost:8000/docs.
+14. Open a web browser and go to: http://localhost:8000/docs.
 
 ## MANUAL
 
