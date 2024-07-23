@@ -648,7 +648,25 @@ It yields a SQLAlchemy session that is automatically closed after the request is
 <dl class="py function">
 <dt class="sig sig-object py" id="src.repository.users.ban_user">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.repository.users.</span></span><span class="sig-name descname"><span class="pre">ban_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.users.ban_user" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Ban a user from the system.</p>
+<p>This function bans a user by deleting their record from the database.
+Only users with the ‘admin’ role are allowed to perform this action.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username of the user to be banned.</p></li>
+<li><p><strong>current_user</strong> (<a class="reference internal" href="#src.database.models.User" title="src.database.models.User"><em>User</em></a>) – The user performing the ban action.</p></li>
+<li><p><strong>db</strong> (<em>Session</em>) – The database session.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The banned user object if the operation was successful, otherwise None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.database.models.User" title="src.database.models.User">User</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.repository.users.confirmed_email">
@@ -690,12 +708,44 @@ It yields a SQLAlchemy session that is automatically closed after the request is
 <dl class="py function">
 <dt class="sig sig-object py" id="src.repository.users.get_current_user_profile">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.repository.users.</span></span><span class="sig-name descname"><span class="pre">get_current_user_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.users.get_current_user_profile" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieve the current user’s profile information.</p>
+<p>This function fetches the profile information of the current authenticated user,
+including the number of photos they have uploaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<a class="reference internal" href="#src.database.models.User" title="src.database.models.User"><em>User</em></a>) – The current authenticated user.</p></li>
+<li><p><strong>db</strong> (<em>Session</em>) – The database session dependency.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the user’s profile information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.repository.users.get_profile">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.repository.users.</span></span><span class="sig-name descname"><span class="pre">get_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.users.get_profile" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieve the profile information for a given username.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username of the user whose profile is to be retrieved.</p></li>
+<li><p><strong>db</strong> (<em>Session</em>) – The database session used to query the user information.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the user’s profile information or None if the user does not exist.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict or None</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.repository.users.get_user_by_email">
@@ -776,7 +826,25 @@ It yields a SQLAlchemy session that is automatically closed after the request is
 <dl class="py function">
 <dt class="sig sig-object py" id="src.repository.users.update_user_profile">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.repository.users.</span></span><span class="sig-name descname"><span class="pre">update_user_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ProfileStatusUpdate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.users.update_user_profile" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Update a user’s profile.</p>
+<p>This function allows the current user to update their profile information if the username matches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username of the user whose profile is being updated.</p></li>
+<li><p><strong>body</strong> (<a class="reference internal" href="#src.schemas.ProfileStatusUpdate" title="src.schemas.ProfileStatusUpdate"><em>ProfileStatusUpdate</em></a>) – The profile status update data.</p></li>
+<li><p><strong>current_user</strong> (<a class="reference internal" href="#src.database.models.User" title="src.database.models.User"><em>User</em></a>) – The current authenticated user.</p></li>
+<li><p><strong>db</strong> (<em>Session</em>) – The database session dependency.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated user profile or None if the username does not match the current user.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.database.models.User" title="src.database.models.User">User</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 <section id="module-src.routes.auth">
@@ -1172,7 +1240,24 @@ It yields a SQLAlchemy session that is automatically closed after the request is
 <dl class="py function">
 <dt class="sig sig-object py" id="src.routes.users.ban_user">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.routes.users.</span></span><span class="sig-name descname"><span class="pre">ban_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_current_user)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.routes.users.ban_user" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Ban a user.</p>
+<p>This endpoint allows the current user to ban another user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username of the user to be banned.</p></li>
+<li><p><strong>db</strong> (<em>Session</em>) – The database session dependency.</p></li>
+<li><p><strong>current_user</strong> (<a class="reference internal" href="#src.database.models.User" title="src.database.models.User"><em>User</em></a>) – The current authenticated user.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The banned user profile.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.schemas.UserDb" title="src.schemas.UserDb">UserDb</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.routes.users.delete_user">
@@ -1282,7 +1367,28 @@ It yields a SQLAlchemy session that is automatically closed after the request is
 <dl class="py function">
 <dt class="sig sig-object py" id="src.routes.users.update_user_profile">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.routes.users.</span></span><span class="sig-name descname"><span class="pre">update_user_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ProfileStatusUpdate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_current_user)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.routes.users.update_user_profile" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Update a user’s profile.</p>
+<p>This endpoint allows the current user to update their profile information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> (<a class="reference internal" href="#src.schemas.ProfileStatusUpdate" title="src.schemas.ProfileStatusUpdate"><em>ProfileStatusUpdate</em></a>) – The profile status update data.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username of the user whose profile is being updated.</p></li>
+<li><p><strong>db</strong> (<em>Session</em>) – The database session dependency.</p></li>
+<li><p><strong>current_user</strong> (<a class="reference internal" href="#src.database.models.User" title="src.database.models.User"><em>User</em></a>) – The current authenticated user.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated user profile.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.schemas.UserDb" title="src.schemas.UserDb">UserDb</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – If the user is not found.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.routes.users.update_user_role">
