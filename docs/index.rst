@@ -118,6 +118,14 @@ fastapi_app src services Email
   :undoc-members:
   :show-inheritance:
 
+fastapi_app src services Photo_service
+============================================================================================================
+.. automodule:: src.services.photo_service
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+
 fastapi_app src services Storage
 ============================================================================================================
 .. automodule:: src.services.storage
