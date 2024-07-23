@@ -13,15 +13,25 @@ photo_tag_table = Table(
 
 class User(Base):
     """Class which describes table in database of the User
-    :param id:int: User unique id in DB
-    :param username: str: Username
-    :param email: str: mail address of the user
-    :param password: str: user password
-    :param role: str: user role: admin, moderator or standard user
-    :param created_at: datetime: the date of user creation
-    :param avatar: str: link to the image of avatar in Cloudinary
-    :param refresh_token: str: refresh_token of the user
-    :param confirmed: boolean: information if the user is confirmed by mail
+
+    :param id: User unique id in DB
+    :type id: int
+    :param username: Username
+    :type username: str:
+    :param email: mail address of the user
+    :type email: str:
+    :param password: user password
+    :type password: str:
+    :param role: user role: admin, moderator or standard user
+    :type role: str:
+    :param created_at: the date of user creation
+    :type created_at: datetime:
+    :param avatar: link to the image of avatar in Cloudinary
+    :type avatar: str:
+    :param refresh_token: refresh_token of the user
+    :type refresh_token: str: 
+    :param confirmed: information if the user is confirmed by mail
+    :type confirmed: boolean:
     """
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -38,16 +48,23 @@ class User(Base):
 
 class Photo(Base):
     """Class which describes table in database of the Photo
-    :param id:int: photo unique id in DB
-    :param user_id: int: id number of the user who entered the image into the DB
+
+    :param id: photo unique id in DB
+    :type id: int
+    :param user_id: id number of the user who entered the image into the DB
+    :type user_id: int
     :param url: url adress to the photo
-    :param description: str: description of the photo
+    :type url: str
+    :param description: description of the photo
+    :type description: str
     :param tags: tags about the photo which is putting in DB. Relation 'many to many' - many tags to one photo and one tag to many photos.
+    :type tags: relations
     :param created_at: the date and time of the photo creation - format: YYYY-MM-DD HH:MM:SS where Y-means year, M - means month, D- means day H - means hour, M - means minutes and S - means seconds
+    :type created_at: datetime
     :param updated_at: the date and time of the photo updating - format: YYYY-MM-DD HH:MM:SS where Y-means year, M - means month, D- means day H - means hour, M - means minutes and S - means seconds
-    :param rating: float: rating
-    :param user: Relation between user and photo
-    :param commends: Relation between comment and photo
+    :type updated_at: datetime
+    :param rating: rating
+    :type rating: float
     """
     __tablename__ = "photos"
     id = Column(Integer, primary_key=True, index=True)
@@ -64,9 +81,13 @@ class Photo(Base):
 class Tag(Base):
     """
     Class which describes table in database of the Tag
-    :param id: int: tag's unique id in DB
-    :param name: str: tag's name
-    :param user_id: int: id number of the user who entered the tag into the DB
+
+    :param id: tag's unique id in DB
+    :type id: int
+    :param name: tag's name
+    :type name: str
+    :param user_id: id number of the user who entered the tag into the DB
+    :type user_id: int
     """
     __tablename__ = "tags"
     id = Column(Integer, primary_key=True, index=True)
@@ -75,12 +96,19 @@ class Tag(Base):
 
 class Comment(Base):
     """Class which describes table in database of the Comment
-    :param id:int: comment's unique id in DB
+
+    :param id: comment's unique id in DB
+    :type id: int
     :param photo_id: the id number of the photo to which the tag is to be assigned
-    :param user_id: int: Id number of the user who entered the note into the DB
-    :param content: str: comment of the photo
-    :param created_at: datetime: comment creation date
+    :type photo_id: int
+    :param user_id: Id number of the user who entered the note into the DB
+    :type user_id: int
+    :param content: comment of the photo
+    :type content: str
+    :param created_at: comment creation date
+    :type created_at: datetime
     :param updated_at: datetime: comment update date
+    :type updated_at: datetime
     """
     __tablename__ = 'comments'
 
@@ -97,10 +125,15 @@ class Comment(Base):
 class Opinion(Base):
     """
     Class which archives all opinion about photos
-    :param id: int: opinion's unique id in DB
-    :param vote: int: number of stars which show how the photo user loved
-    :param user_id: int: id number of the user who voted
+    
+    :param id: opinion's unique id in DB
+    :type id: int
+    :param vote: number of stars which show how the photo user loved
+    :type vote: int
+    :param user_id: id number of the user who voted
+    :type user_id: int
     :param photo_id: photo unique id in DB
+    :type photo_id: int
     """
     __tablename__ = "opinions"
     id = Column(Integer, primary_key=True, index=True)

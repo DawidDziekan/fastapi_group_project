@@ -6,9 +6,13 @@ from pydantic import BaseModel, Field, EmailStr
 class UserModel(BaseModel):
     """
     User Model
-    :param username: str: user name
+
+    :param username: user name
+    :type username: str
     :param email: user mail address
-    :param password: str: user password
+    :type email: EmailStr
+    :param password: user password
+    :type password: str
     """
     username: str = Field(min_length=5, max_length=16)
     email: EmailStr
@@ -18,12 +22,19 @@ class UserModel(BaseModel):
 class UserDb(BaseModel):
     """
     User Model in DB
-    :param id: int: user id
-    :param username: str: username
+
+    :param id: user id
+    :type id: int
+    :param username: username
+    :type username: str
     :param email: user mail address
-    :param role: str: user role : 'admin', 'standard user' or 'modelator'
-    :param created_at: datetime: date of user creation
-    :param avatar: str: link to user avatar
+    :TYPE email: EmailStr
+    :param role: user role : 'admin', 'standard user' or 'modelator'
+    :type role: str
+    :param created_at: date of user creation
+    :type created_at: datetime
+    :param avatar: link to user avatar
+    :type avatar: str
     """
     id: int
     username: str
@@ -39,8 +50,11 @@ class UserDb(BaseModel):
 class UserResponse(BaseModel):
     """
     User Response Model
-    :param user: UserDB: user data
-    :param detail: str: information that the user has been created
+
+    :param user: user data
+    :type user: UserDB
+    :param detail: information that the user has been created
+    :type detail: str
     """
     user: UserDb
     detail: str = "User successfully created"
@@ -49,9 +63,13 @@ class UserResponse(BaseModel):
 class TokenModel(BaseModel):
     """
     Token Model
-    :param access_token: str: user access token
-    :param refresh_token: str: user refresh token
-    :param token_type: str: type of the token is 'bearer'
+
+    :param access_token: user access token
+    :type access_token: str
+    :param refresh_token: user refresh token
+    :type refresh_token: str
+    :param token_type: type of the token is 'bearer'
+    :type token_type: str
     """
     access_token: str
     refresh_token: str
@@ -61,14 +79,18 @@ class TokenModel(BaseModel):
 class RequestEmail(BaseModel):
     """
     Request Email Model
-    : param email: email adress
+
+    :param email: email adress
+    :type email: EmailStr
     """
     email: EmailStr
       
 class CommentBase(BaseModel):
     """
     Commend Base Model
-    :param content: str: comment to the photo
+
+    :param content: comment to the photo
+    :type content: str
     """
     content: str
 
@@ -90,11 +112,17 @@ class CommentUpdate(CommentBase):
 class Comment(CommentBase):
     """
     Comment Model
-    :param id: int: comment id number
+
+    :param id: comment id number
+    :type id: int
     :param created_at: date and time of comment creation
+    :type created_at: datetime
     :para updated_at: date and time the comment was updated
-    :param user_id: int: user id
-    :param photo_id: int: photo id
+    :type updated_at: datetime
+    :param user_id: user id
+    :type user_id: int
+    :param photo_id: photo id
+    :type photo_id: int
     """
     id: int
     created_at: datetime
@@ -109,9 +137,13 @@ class Comment(CommentBase):
 class PhotoBase(BaseModel):
     """
     Photo Base Model
-    :param url: str: ulr adress to the photo
+
+    :param url: ulr adress to the photo
+    :type url: str
     :param description: description of the selected photo
+    :type description: str, optional
     :param tags: tags associated with the selected image
+    :type tags: str, optional
     """
     url: str
     description: Optional[str] = None
@@ -128,9 +160,12 @@ class PhotoCreate(PhotoBase):
 class Photo(PhotoBase):
     """
     Photo Model
-    :param id: int: photo's id numeber
-    :param user_id: int: user id number
+    :param id: photo's id numeber
+    :type id: int
+    :param user_id: user id number
+    :type user_id: int
     :param created_at: date and time of photo's creation 
+    :type created_at: datetime
     """
     id: int
     user_id: int
@@ -143,6 +178,7 @@ class Photo(PhotoBase):
 class PhotoSearch(BaseModel):
     """
     Photo Search Model: 
+
     """
     keywords: Optional[str] = None
     tags: Optional[List[str]] = None
@@ -155,7 +191,9 @@ class PhotoSearch(BaseModel):
 class UserSearch(BaseModel):
     """
     User Search Model
-    :param user_id: int: user's id
+    
+    :param user_id: user's id
+    :type user_id: int
     """
     user_id: int
 
@@ -163,11 +201,19 @@ class UserSearch(BaseModel):
 class ProfileResponse(BaseModel):
     """
     Profile Response Model
-    :param username: str: username
+
+    :param username: username
+    :type username: str
     :para email: user's email addres
-    :param role: str: the role of the user: administrator, standard user or modelator
-    :param avatar: str: link to the user's avatar 
-    :param photo_amount: int: number of images for a selected user
+    :type email: EmailStr
+    :param role: the role of the user: administrator, standard user or modelator
+    :type role: str
+    :param created_at: date and time of update
+    :type created_at: datetime
+    :param avatar: link to the user's avatar 
+    :type avatar: str
+    :param photo_amount: number of images for a selected user
+    :type photo_amount: int
     """
     username: str
     email: EmailStr
@@ -182,9 +228,13 @@ class ProfileResponse(BaseModel):
 class ProfileStatusUpdate(BaseModel):
     """
     Profile Status Update Model
-    :param username: str: username
-    :param password: : str: password of the user
-    :param avatar: str: link to the user's avatar 
+
+    :param username: username
+    :type username: str
+    :param password: password of the user
+    :type password: str
+    :param avatar: link to the user's avatar 
+    :type avater: str
      """
     username: str
     password: str

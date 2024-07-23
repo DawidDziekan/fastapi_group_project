@@ -20,6 +20,15 @@ async def save_photo(file: UploadFile) -> str:
     return file_path
 
 async def delete_photo(photo_id: UUID):
+    """
+    Deleted photo by id. 
+    
+    :param photo_id: photo id number
+    :type: UUID
+    :param file_path:  path to file with the photo
+    :raises: FileNotFoundError: If a file with the given path does not exist.
+
+    """
     photo = Photo.get(photo_id)
     if not photo:
         raise FileNotFoundError("Photo not found")
@@ -30,6 +39,15 @@ async def delete_photo(photo_id: UUID):
     Photo.delete(photo_id)
 
 async def update_photo_description(photo_id: UUID, description: str):
+    """
+    Update description of the photo.
+    
+    :param photo_id: photo id number
+    :type: UUID
+    :param description: description of the photo
+    :type: str
+    :raises: FileNotFoundError: If file with photo does not exist.
+    """
     photo = Photo.get(photo_id)
     if not photo:
         raise FileNotFoundError("Photo not found")
@@ -37,6 +55,14 @@ async def update_photo_description(photo_id: UUID, description: str):
     Photo.update(photo_id, description)
 
 async def get_photo(photo_id: UUID) -> str:
+    """ 
+    Gets photo's file path.
+    
+    :param photo: photo id number
+    :type: UUID
+    :return: path to the file with photo
+    :raises: FileNotFoundError: If the photo by id doen not exist
+    """
     photo = Photo.get(photo_id)
     if not photo:
         raise FileNotFoundError("Photo not found")

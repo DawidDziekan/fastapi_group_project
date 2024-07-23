@@ -17,9 +17,23 @@ fastapi_app main
   :undoc-members:
   :show-inheritance:
 
+fastapi_app src conf Config
+========================================================================================================
+.. automodule:: src.conf.config
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
 fastapi_app src database Db
 ============================================================================================================
 .. automodule:: src.database.db
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+fastapi_app src database Models
+============================================================================================================
+.. automodule:: src.database.models
   :members:
   :undoc-members:
   :show-inheritance:
@@ -73,6 +87,13 @@ fastapi_app src routes Photos
   :undoc-members:
   :show-inheritance:
 
+fastapi_app src routes Search_filter
+==========================================================================================================
+.. automodule:: src.routes.search_filter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
 
 fastapi_app src routes Users
 ============================================================================================================
@@ -89,12 +110,28 @@ fastapi_app src services Auth
   :undoc-members:
   :show-inheritance:
 
+
 fastapi_app src services Email
 ============================================================================================================
 .. automodule:: src.services.email
   :members:
   :undoc-members:
   :show-inheritance:
+
+fastapi_app src services Storage
+============================================================================================================
+.. automodule:: src.services.storage
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+fastapi_app src Schemas
+============================================================================================================
+.. automodule:: src.schemas
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
 
 Indices and tables
 ============================================================================================================
