@@ -165,6 +165,23 @@ async def read_user(username: str,db: Session = Depends(get_db)):
 @router.patch("/{username}", response_model=UserDb)
 async def update_user_profile(body: ProfileStatusUpdate, username: str, db: Session = Depends(get_db),
                              current_user: User = Depends(auth_service.get_current_user)):
+    """
+    Update a user's profile.
+
+    This endpoint allows the current user to update their profile information.
+
+    :param body: The profile status update data.
+    :type body: ProfileStatusUpdate
+    :param username: The username of the user whose profile is being updated.
+    :type username: str
+    :param db: The database session dependency.
+    :type db: Session
+    :param current_user: The current authenticated user.
+    :type current_user: User
+    :return: The updated user profile.
+    :rtype: UserDb
+    :raises HTTPException: If the user is not found.
+    """
     user = await repository_users.update_user_profile(username, body, current_user, db)
     if user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
@@ -173,6 +190,20 @@ async def update_user_profile(body: ProfileStatusUpdate, username: str, db: Sess
 @router.delete("/{username}/ban", response_model=UserDb)
 async def ban_user(username: str, db: Session = Depends(get_db),
                              current_user: User = Depends(auth_service.get_current_user)):
+    """
+    Ban a user.
+
+    This endpoint allows the current user to ban another user.
+
+    :param username: The username of the user to be banned.
+    :type username: str
+    :param db: The database session dependency.
+    :type db: Session
+    :param current_user: The current authenticated user.
+    :type current_user: User
+    :return: The banned user profile.
+    :rtype: UserDb
+    """
     response = await repository_users.ban_user(username, current_user, db)
     return response
 

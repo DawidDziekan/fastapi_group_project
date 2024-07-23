@@ -111,6 +111,16 @@ async def update_avatar(email, url: str, db: Session) -> User:
     return user
 
 async def get_profile(username: str, db: Session):
+    """
+    Retrieve the profile information for a given username.
+
+    :param username: The username of the user whose profile is to be retrieved.
+    :type username: str
+    :param db: The database session used to query the user information.
+    :type db: Session
+    :return: A dictionary containing the user's profile information or None if the user does not exist.
+    :rtype: dict or None
+    """
     user_information = db.query(User).filter(User.username==username).first()
     if not user_information:
         return None
@@ -126,6 +136,21 @@ async def get_profile(username: str, db: Session):
     return profile_information
 
 async def ban_user(username: str, current_user: User, db: Session):
+    """
+    Ban a user from the system.
+
+    This function bans a user by deleting their record from the database.
+    Only users with the 'admin' role are allowed to perform this action.
+
+    :param username: The username of the user to be banned.
+    :type username: str
+    :param current_user: The user performing the ban action.
+    :type current_user: User
+    :param db: The database session.
+    :type db: Session
+    :return: The banned user object if the operation was successful, otherwise None.
+    :rtype: User or None
+    """
     if current_user.role!="admin":
         return None
     user = db.query(User).filter(User.username==username).first()
@@ -134,6 +159,22 @@ async def ban_user(username: str, current_user: User, db: Session):
     return user
 
 async def update_user_profile(username: str,body: ProfileStatusUpdate, current_user: User, db: Session):
+    """
+    Update a user's profile.
+
+    This function allows the current user to update their profile information if the username matches.
+
+    :param username: The username of the user whose profile is being updated.
+    :type username: str
+    :param body: The profile status update data.
+    :type body: ProfileStatusUpdate
+    :param current_user: The current authenticated user.
+    :type current_user: User
+    :param db: The database session dependency.
+    :type db: Session
+    :return: The updated user profile or None if the username does not match the current user.
+    :rtype: User or None
+    """
     if current_user.username!=username:
         return None
     user = db.query(User).filter(User.username==username).first()
@@ -144,6 +185,19 @@ async def update_user_profile(username: str,body: ProfileStatusUpdate, current_u
     return user
 
 async def get_current_user_profile(user: User, db: Session):
+    """
+    Retrieve the current user's profile information.
+
+    This function fetches the profile information of the current authenticated user,
+    including the number of photos they have uploaded.
+
+    :param user: The current authenticated user.
+    :type user: User
+    :param db: The database session dependency.
+    :type db: Session
+    :return: A dictionary containing the user's profile information.
+    :rtype: dict
+    """
     amount_of_user_photos = db.query(Photo).filter(Photo.user_id==user.id).count()
     profile_information = {
                             'username':     user.username,
