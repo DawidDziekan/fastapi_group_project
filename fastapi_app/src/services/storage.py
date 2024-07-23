@@ -9,6 +9,17 @@ UPLOAD_DIR = "uploads/"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 async def save_photo(file: UploadFile) -> str:
+    """
+    Save an uploaded photo to the server.
+
+    This function saves an uploaded photo file to a specified directory on the server.
+    The file is saved with a unique name generated using UUID to avoid conflicts.
+
+    :param file: The uploaded file to be saved.
+    :type file: UploadFile
+    :return: The path to the saved file.
+    :rtype: str
+    """
     file_extension = os.path.splitext(file.filename)[1]
     file_name = f"{uuid4()}{file_extension}"
     file_path = os.path.join(UPLOAD_DIR, file_name)

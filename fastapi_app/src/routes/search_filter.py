@@ -21,15 +21,13 @@ async def search_photos(
     """
     Search photos based on keywords, tags, rating, or date range.
 
-    Args:
-        search (schemas.PhotoSearch): The search criteria.
-        db (Session): The database session.
-
-    Returns:
-        List[schemas.Photo]: A list of photos matching the search criteria.
-
-    Raises:
-        HTTPException: If neither keywords nor tags are provided for the search.
+    :param search: The search criteria.
+    :type search: schemas.PhotoSearch
+    :param db: The database session.
+    :type db: Session
+    :return: A list of photos matching the search criteria.
+    :rtype: List[schemas.Photo]
+    :raises HTTPException: If neither keywords nor tags are provided for the search.
     """
     if not search.keywords and not search.tags:
         raise HTTPException(status_code=400, detail="Keywords or tags must be provided for search")
@@ -44,17 +42,16 @@ async def search_photos_by_user(
     """
     Search photos by user ID, only accessible to admins and moderators.
 
-    Args:
-        search (schemas.UserSearch): The search criteria including the user ID.
-        db (Session): The database session.
-        current_user (models.User): The current authenticated user.
-
-    Returns:
-        List[schemas.Photo]: A list of photos uploaded by the specified user.
-
-    Raises:
-        HTTPException: If the current user does not have admin or moderator permissions.
-        HTTPException: If the user ID is not provided in the search criteria.
+    :param search: The search criteria including the user ID.
+    :type search: schemas.UserSearch
+    :param db: The database session.
+    :type db: Session
+    :param current_user: The current authenticated user.
+    :type current_user: models.User
+    :return: A list of photos uploaded by the specified user.
+    :rtype: List[schemas.Photo]
+    :raises HTTPException: If the current user does not have admin or moderator permissions.
+    :raises HTTPException: If the user ID is not provided in the search criteria.
     """
     if not (current_user.role == "admin" or current_user.role == "moderator"):
         raise HTTPException(status_code=403, detail="Not enough permissions")
