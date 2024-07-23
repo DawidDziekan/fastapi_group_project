@@ -9,12 +9,12 @@ def apply_filters(query, search: schemas.PhotoSearch):
     """
     Apply various filters to the photo query based on search criteria.
 
-    Args:
-        query (Session.query): The initial query object.
-        search (schemas.PhotoSearch): The search criteria.
-
-    Returns:
-        Session.query: The query object with applied filters.
+    :param query: The initial query object.
+    :type query: Session.query
+    :param search: The search criteria.
+    :type search: schemas.PhotoSearch
+    :return: The query object with applied filters.
+    :rtype: Session.query
     """
     if search.keywords:
         query = query.filter(or_(
@@ -37,12 +37,12 @@ async def search_photos(db: Session, search: schemas.PhotoSearch):
     """
     Search photos based on various criteria.
 
-    Args:
-        db (Session): The database session.
-        search (schemas.PhotoSearch): The search criteria.
-
-    Returns:
-        List[models.Photo]: A list of photos matching the search criteria.
+    :param db: The database session.
+    :type db: Session
+    :param search: The search criteria.
+    :type search: schemas.PhotoSearch
+    :return: A list of photos matching the search criteria.
+    :rtype: List
     """
     query = db.query(models.Photo)
     query = apply_filters(query, search)
@@ -52,12 +52,12 @@ async def search_photos_by_user(db: Session, user_id: int):
     """
     Search photos by a specific user.
 
-    Args:
-        db (Session): The database session.
-        user_id (int): The ID of the user.
-
-    Returns:
-        List[models.Photo]: A list of photos uploaded by the specified user.
+    :param db: The database session.
+    :type db: Session
+    :param user_id: The ID of the user.
+    :type user_id: int
+    :return: A list of photos uploaded by the specified user.
+    :rtype: List
     """
     query = db.query(models.Photo).filter(models.Photo.user_id == user_id)
     return query.all()
