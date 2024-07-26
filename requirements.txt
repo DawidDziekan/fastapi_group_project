@@ -11,3 +11,4 @@ cloudinary
 sqlalchemy
 pydantic[dotenv]
 uvicorn
+sphinx = 7.3.7

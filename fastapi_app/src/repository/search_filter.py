@@ -16,16 +16,16 @@ def apply_filters(query, search: schemas.PhotoSearch):
     :return: The query object with applied filters.
     :rtype: Session.query
     """
-    if search.keywords:
+    if search.keywords != 'string':
         query = query.filter(or_(
             models.Photo.description.ilike(f"%{search.keywords}%"),
             models.Photo.tags.any(models.Tag.name.ilike(f"%{search.keywords}%"))
-        ))
-    if search.tags:
+        ))      
+    if search.tags != ["string"]:
         query = query.filter(models.Photo.tags.any(models.Tag.name.in_(search.tags)))
-    if search.min_rating:
+    if search.min_rating != 0:
         query = query.filter(models.Photo.rating >= search.min_rating)
-    if search.max_rating:
+    if search.max_rating != 0:
         query = query.filter(models.Photo.rating <= search.max_rating)
     if search.start_date:
         query = query.filter(models.Photo.created_at >= search.start_date)

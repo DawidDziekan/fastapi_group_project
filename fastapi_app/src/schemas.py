@@ -147,7 +147,7 @@ class PhotoBase(BaseModel):
     """
     url: str
     description: Optional[str] = None
-    tags: Optional[str]
+    tags: Optional[str] 
 
 
 class PhotoCreate(PhotoBase):

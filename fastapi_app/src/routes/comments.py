@@ -8,8 +8,8 @@ from fastapi_app.src.repository import comments as crud
 from fastapi_app.src.database.db import get_db
 from fastapi_app.src.services.auth import auth_service
 
-
-router = APIRouter()
+router = APIRouter(prefix="/comments", tags=["comments"])
+# router = APIRouter()
 
 @router.post("/photos/{photo_id}/comments/", response_model=schemas.Comment)
 async def create_comment_for_photo(

@@ -10,8 +10,8 @@ from fastapi_app.src.database.db import get_db
 from fastapi_app.src.services.auth import auth_service
 from fastapi_app.src.repository import search_filter as crud
 
-
-router = APIRouter()
+router = APIRouter(prefix="/search_filter", tags=["search_filter"])
+# router = APIRouter()
 
 @router.post("/photos/search", response_model=List[schemas.Photo])
 async def search_photos(
@@ -29,7 +29,7 @@ async def search_photos(
     :rtype: List[schemas.Photo]
     :raises HTTPException: If neither keywords nor tags are provided for the search.
     """
-    if not search.keywords and not search.tags:
+    if not search.keywords or not search.tags:
         raise HTTPException(status_code=400, detail="Keywords or tags must be provided for search")
     return await crud.search_photos(db=db, search=search)
 

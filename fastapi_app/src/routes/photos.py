@@ -10,7 +10,8 @@ import os
 from sqlalchemy.orm import Session
 from typing import Optional
 
-router = APIRouter()
+router = APIRouter(prefix="/photos", tags=["photos"])
+
 
 UPLOAD_DIR = "uploads/"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -55,7 +56,8 @@ async def create_photo(description: str, tags: Optional[str] = None, file: Uploa
     :raises HTTPException: If there is an error saving the photo, raises an appropriate HTTP error.
     """
     file_path = await save_photo(file)
-    tags = await create_tags([tag for tag in tags.split(' ')])
+    tag_list = [tag for tag in tags.split(' ')]
+    tags = await create_tags(tag_list, db)
     photo = Photo(description=description, url=file_path, tags=tags, user_id=current_user.id)
     saved_photo = PhotoService.save(db, photo)
     return saved_photo
@@ -95,7 +97,7 @@ async def delete_photo(photo_id: int, db: Session = Depends(get_db)):
     :raises HTTPException: If the photo is not found, raises a 404 error with the detail message.
     """
     try:
-        PhotoService.delete(db, photo_id)
+        PhotoService.delete(db,photo_id)
         return {"detail": "Photo deleted"}
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
