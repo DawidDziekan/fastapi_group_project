@@ -147,7 +147,7 @@ class PhotoBase(BaseModel):
     """
     url: str
     description: Optional[str] = None
-    tags: Optional[str]
+    tags: Optional[str] 
 
 
 class PhotoCreate(PhotoBase):
@@ -175,17 +175,72 @@ class Photo(PhotoBase):
         orm_mode = True
 
 
-class PhotoSearch(BaseModel):
+class DescriptionSearch(BaseModel):
     """
-    Photo Search Model: 
+    DescriptionSearch Model: 
+    :param id: photo's id number
+    :type id: int
+    :param user_id: user's id numeber
+    :type id: int
+    :param url: url adress of the photo
+    :type url: str
+    :param description: description of the photo
+    :type description: str
+    :param tags: list of tags connected with the photo
+    :type tags: list
+    :param tags: list of tags connected with the photo
+    :param created_at: the date and time of the photo's creation 
+    :type: datetime
+    :param updated_at: the date and time of the photo's updating 
+    :type: datetime
+    :param rating: rating of the photo - if the user like this photo or not.Use digits :max is 6  and min is 1.
+    :type rating: int 
+    """
+    id: int
+    user_id: int
+    url: str
+    description: str
+    tags: list
+    created_at: datetime | None
+    updated_at: datetime | None
+    rating: int | None
+    class Config:
+        orm_mode = True
+ 
+class TagSearch(BaseModel):
+    """
+    TagSearch Model: 
+    
+    DescriptionSearch Model: 
+    :param id: photo's id number
+    :type id: int
+    :param user_id: user's id numeber
+    :type id: int
+    :param url: url adress of the photo
+    :type url: str
+    :param description: description of the photo
+    :type description: str
+    :param tags: list of tags connected with the photo
+    :type tags: list
+    :param tags: list of tags connected with the photo
+    :param created_at: the date and time of the photo's creation 
+    :type: datetime
+    :param updated_at: the date and time of the photo's updating 
+    :type: datetime
+    :param rating: rating of the photo - if the user like this photo or not.Use digits :max is 6  and min is 1.
+    :type rating: int 
+    """
+    id: int
+    user_id: int
+    url: str | None
+    description: str | None
+    tags: list | None
+    created_at: datetime | None
+    updated_at: datetime | None
+    rating: int | None
+    class Config:
+        orm_mode = True
 
-    """
-    keywords: Optional[str] = None
-    tags: Optional[List[str]] = None
-    min_rating: Optional[float] = None
-    max_rating: Optional[float] = None
-    start_date: Optional[datetime] = None
-    end_date: Optional[datetime] = None
 
 
 class UserSearch(BaseModel):
@@ -239,3 +294,4 @@ class ProfileStatusUpdate(BaseModel):
     username: str
     password: str
     avatar: str
+

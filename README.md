@@ -1,13 +1,40 @@
 # fastapi_group_project
  Simple fastapi app
  
-
-
-## DO IT TO RUN:
-
 CL - means Commend line
 
 Use the 'Dockerfile' so that the program can run in a Docker container. Remember to run container before steps below.
+
+## To migrate SQLALchemy models to postgresql database :
+
+1. Make sure you are in the 'fastapi_group_project' folder,
+2. If you are not, just confirmed by ENTER buttom after type in CL : cd fastapi_group_project 
+3. Type in CL : alembic init alembic
+4.  Confirme by ENTER buttom
+5. Look at 'alembic.ini' file and in line 63 change:
+
+    sqlalchemy.url = postgresql+psycopg2://postgres:secret_password@localhost:5432/databasename
+
+    secret_password  -  change for your password to your database
+    databasename -  change for name of your database
+
+6. Next, Look at 'env.py' file  and :
+
+    -> add import :
+
+        from fastapi_app.src.database.models import Base
+
+    -> In line 21  change 'target_metadata' variable:
+
+            from : target_metadata = None
+            to :   target_metadata = Base.metadata
+
+7. Now, we can start migration by typing in CL : alembic revision --autogenerate -m 'test'
+8. Remeber to confirme by ENTER buttom
+9. In this moment we send tables to db by typing in CL : alembic upgrade head
+
+
+## DO IT TO RUN:
 
 1. Create '.env' file in 'fastapi_app' folder.
 2. Next, in CL write : poetry shell

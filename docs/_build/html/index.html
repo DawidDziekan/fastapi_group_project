@@ -560,61 +560,57 @@ It yields a SQLAlchemy session that is automatically closed after the request is
 <section id="module-src.repository.search_filter">
 <span id="fastapi-app-src-repository-search-filter"></span><h1>fastapi_app src repository Search_filter<a class="headerlink" href="#module-src.repository.search_filter" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="src.repository.search_filter.apply_filters">
-<span class="sig-prename descclassname"><span class="pre">src.repository.search_filter.</span></span><span class="sig-name descname"><span class="pre">apply_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PhotoSearch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.search_filter.apply_filters" title="Link to this definition">¶</a></dt>
-<dd><p>Apply various filters to the photo query based on search criteria.</p>
+<dt class="sig sig-object py" id="src.repository.search_filter.get_description">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.repository.search_filter.</span></span><span class="sig-name descname"><span class="pre">get_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.search_filter.get_description" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve one or more photos from the database based on their descriptions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>query</strong> (<em>Session.query</em>) – The initial query object.</p></li>
-<li><p><strong>search</strong> (<a class="reference internal" href="#src.schemas.PhotoSearch" title="src.schemas.PhotoSearch"><em>schemas.PhotoSearch</em></a>) – The search criteria.</p></li>
+<li><p><strong>db</strong> (<em>Session</em>) – The database session.</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – The description to search for (case-insensitive).</p></li>
+<li><p><strong>rating_filter</strong> – The rating of search photo.</p></li>
+<li><p><strong>created_at</strong> (<em>str</em>) – The date of search photo creation.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The query object with applied filters.</p>
+<dt class="field-even">Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Session.query</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of Photo objects matching the specified description or photo objects with its rating or its creation date. .</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#src.database.models.Photo" title="src.database.models.Photo">models.Photo</a>]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – If the photo is not found, or the photo with selected rating or creation date is not found, raises a 404 error with the detail message.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="src.repository.search_filter.search_photos">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.repository.search_filter.</span></span><span class="sig-name descname"><span class="pre">search_photos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PhotoSearch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.search_filter.search_photos" title="Link to this definition">¶</a></dt>
-<dd><p>Search photos based on various criteria.</p>
+<dt class="sig sig-object py" id="src.repository.search_filter.get_tag">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.repository.search_filter.</span></span><span class="sig-name descname"><span class="pre">get_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.search_filter.get_tag" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve one or more photos from the database based on their tag.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>db</strong> (<em>Session</em>) – The database session.</p></li>
-<li><p><strong>search</strong> (<a class="reference internal" href="#src.schemas.PhotoSearch" title="src.schemas.PhotoSearch"><em>schemas.PhotoSearch</em></a>) – The search criteria.</p></li>
+<li><p><strong>tagname</strong> (<em>str</em>) – The tag to search for.</p></li>
+<li><p><strong>rating_filter</strong> – The rating of search photo.</p></li>
+<li><p><strong>created_at</strong> (<em>str</em>) – The date of search photo creation.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of photos matching the search criteria.</p>
+<dt class="field-even">Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of Photo objects matching the specified tagname.</p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.repository.search_filter.search_photos_by_user">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.repository.search_filter.</span></span><span class="sig-name descname"><span class="pre">search_photos_by_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.repository.search_filter.search_photos_by_user" title="Link to this definition">¶</a></dt>
-<dd><p>Search photos by a specific user.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>db</strong> (<em>Session</em>) – The database session.</p></li>
-<li><p><strong>user_id</strong> (<em>int</em>) – The ID of the user.</p></li>
-</ul>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#src.database.models.Photo" title="src.database.models.Photo">models.Photo</a>]</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of photos uploaded by the specified user.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List</p>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – If the photo is not found, or the photo with selected rating or creation date is not found, raises a 404 error with the detail message.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1185,51 +1181,51 @@ including the number of photos they have uploaded.</p>
 <section id="module-src.routes.search_filter">
 <span id="fastapi-app-src-routes-search-filter"></span><h1>fastapi_app src routes Search_filter<a class="headerlink" href="#module-src.routes.search_filter" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="src.routes.search_filter.search_photos">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.routes.search_filter.</span></span><span class="sig-name descname"><span class="pre">search_photos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PhotoSearch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.routes.search_filter.search_photos" title="Link to this definition">¶</a></dt>
-<dd><p>Search photos based on keywords, tags, rating, or date range.</p>
+<dt class="sig sig-object py" id="src.routes.search_filter.get_photo_by_description">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.routes.search_filter.</span></span><span class="sig-name descname"><span class="pre">get_photo_by_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.routes.search_filter.get_photo_by_description" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve a photo by its description or description with rating or date of creation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>search</strong> (<a class="reference internal" href="#src.schemas.PhotoSearch" title="src.schemas.PhotoSearch"><em>schemas.PhotoSearch</em></a>) – The search criteria.</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – The description of search photo.</p></li>
+<li><p><strong>rating_filter</strong> (<em>int</em>) – The rating of search photo.</p></li>
+<li><p><strong>created_at</strong> (<em>str</em>) – The creation date of search photo.</p></li>
 <li><p><strong>db</strong> (<em>Session</em>) – The database session.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of photos matching the search criteria.</p>
+<dd class="field-even"><p>The photo.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference internal" href="#src.schemas.Photo" title="src.schemas.Photo">schemas.Photo</a>]</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>HTTPException</strong> – If neither keywords nor tags are provided for the search.</p>
+<dd class="field-even"><p><strong>HTTPException</strong> – If the photo is not found, or the photo with selected rating or creation date is not found, raises a 404 error with the detail message.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="src.routes.search_filter.search_photos_by_user">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.routes.search_filter.</span></span><span class="sig-name descname"><span class="pre">search_photos_by_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UserSearch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">User</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_current_user)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.routes.search_filter.search_photos_by_user" title="Link to this definition">¶</a></dt>
-<dd><p>Search photos by user ID, only accessible to admins and moderators.</p>
+<dt class="sig sig-object py" id="src.routes.search_filter.get_photo_by_tag">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.routes.search_filter.</span></span><span class="sig-name descname"><span class="pre">get_photo_by_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.routes.search_filter.get_photo_by_tag" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve a photo by its tag or tag with rating or date of creation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>search</strong> (<a class="reference internal" href="#src.schemas.UserSearch" title="src.schemas.UserSearch"><em>schemas.UserSearch</em></a>) – The search criteria including the user ID.</p></li>
+<li><p><strong>tagname</strong> (<em>str</em>) – The tagname of search photo.</p></li>
+<li><p><strong>rating_filter</strong> (<em>int</em>) – The rating of search photo.</p></li>
+<li><p><strong>created_at</strong> (<em>str</em>) – The creation date of search photo.</p></li>
 <li><p><strong>db</strong> (<em>Session</em>) – The database session.</p></li>
-<li><p><strong>current_user</strong> (<a class="reference internal" href="#src.database.models.User" title="src.database.models.User"><em>models.User</em></a>) – The current authenticated user.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of photos uploaded by the specified user.</p>
+<dd class="field-even"><p>The photo.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference internal" href="#src.schemas.Photo" title="src.schemas.Photo">schemas.Photo</a>]</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>HTTPException</strong> – If the current user does not have admin or moderator permissions.</p></li>
-<li><p><strong>HTTPException</strong> – If the user ID is not provided in the search criteria.</p></li>
-</ul>
+<dd class="field-even"><p><strong>HTTPException</strong> – If the photo is not found, or the photo with selected rating or creation date is not found, raises a 404 error with the detail message.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1922,6 +1918,81 @@ The file is saved with a unique name generated using UUID to avoid conflicts.</p
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.schemas.</span></span><span class="sig-name descname"><span class="pre">DescriptionSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updated_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.schemas.DescriptionSearch" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>DescriptionSearch Model: 
+:param id: photo’s id number
+:type id: int
+:param user_id: user’s id numeber
+:type id: int
+:param url: url adress of the photo
+:type url: str
+:param description: description of the photo
+:type description: str
+:param tags: list of tags connected with the photo
+:type tags: list
+:param tags: list of tags connected with the photo
+:param created_at: the date and time of the photo’s creation 
+:type: datetime
+:param updated_at: the date and time of the photo’s updating 
+:type: datetime
+:param rating: rating of the photo - if the user like this photo or not.Use digits :max is 6  and min is 1.
+:type rating: int</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#src.schemas.DescriptionSearch.Config" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.Config.orm_mode">
+<span class="sig-name descname"><span class="pre">orm_mode</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.Config.orm_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.created_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.description" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.rating">
+<span class="sig-name descname"><span class="pre">rating</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.rating" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.tags" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.updated_at">
+<span class="sig-name descname"><span class="pre">updated_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.updated_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.DescriptionSearch.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.schemas.DescriptionSearch.user_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="src.schemas.Photo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.schemas.</span></span><span class="sig-name descname"><span class="pre">Photo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.schemas.Photo" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.schemas.PhotoBase" title="src.schemas.PhotoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotoBase</span></code></a></p>
@@ -1996,43 +2067,6 @@ The file is saved with a unique name generated using UUID to avoid conflicts.</p
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.schemas.</span></span><span class="sig-name descname"><span class="pre">PhotoCreate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.schemas.PhotoCreate" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.schemas.PhotoBase" title="src.schemas.PhotoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhotoBase</span></code></a></p>
 <p>Photo Create Model</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="src.schemas.PhotoSearch">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.schemas.</span></span><span class="sig-name descname"><span class="pre">PhotoSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keywords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_rating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.schemas.PhotoSearch" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
-<p>Photo Search Model:</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.schemas.PhotoSearch.end_date">
-<span class="sig-name descname"><span class="pre">end_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.PhotoSearch.end_date" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.schemas.PhotoSearch.keywords">
-<span class="sig-name descname"><span class="pre">keywords</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.PhotoSearch.keywords" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.schemas.PhotoSearch.max_rating">
-<span class="sig-name descname"><span class="pre">max_rating</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.PhotoSearch.max_rating" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.schemas.PhotoSearch.min_rating">
-<span class="sig-name descname"><span class="pre">min_rating</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.PhotoSearch.min_rating" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.schemas.PhotoSearch.start_date">
-<span class="sig-name descname"><span class="pre">start_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.PhotoSearch.start_date" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.schemas.PhotoSearch.tags">
-<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.PhotoSearch.tags" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -2141,6 +2175,82 @@ The file is saved with a unique name generated using UUID to avoid conflicts.</p
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.schemas.RequestEmail.email">
 <span class="sig-name descname"><span class="pre">email</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">EmailStr</span></em><a class="headerlink" href="#src.schemas.RequestEmail.email" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.schemas.TagSearch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.schemas.</span></span><span class="sig-name descname"><span class="pre">TagSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updated_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.schemas.TagSearch" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>TagSearch Model:</p>
+<p>DescriptionSearch Model: 
+:param id: photo’s id number
+:type id: int
+:param user_id: user’s id numeber
+:type id: int
+:param url: url adress of the photo
+:type url: str
+:param description: description of the photo
+:type description: str
+:param tags: list of tags connected with the photo
+:type tags: list
+:param tags: list of tags connected with the photo
+:param created_at: the date and time of the photo’s creation 
+:type: datetime
+:param updated_at: the date and time of the photo’s updating 
+:type: datetime
+:param rating: rating of the photo - if the user like this photo or not.Use digits :max is 6  and min is 1.
+:type rating: int</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#src.schemas.TagSearch.Config" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.Config.orm_mode">
+<span class="sig-name descname"><span class="pre">orm_mode</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#src.schemas.TagSearch.Config.orm_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.TagSearch.created_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.TagSearch.description" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.schemas.TagSearch.id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.rating">
+<span class="sig-name descname"><span class="pre">rating</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.TagSearch.rating" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.TagSearch.tags" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.updated_at">
+<span class="sig-name descname"><span class="pre">updated_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.TagSearch.updated_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.schemas.TagSearch.url" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.schemas.TagSearch.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.schemas.TagSearch.user_id" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2429,9 +2539,8 @@ The file is saved with a unique name generated using UUID to avoid conflicts.</p
 </ul>
 </li>
 <li><a class="reference internal" href="#module-src.repository.search_filter">fastapi_app src repository Search_filter</a><ul>
-<li><a class="reference internal" href="#src.repository.search_filter.apply_filters"><code class="docutils literal notranslate"><span class="pre">apply_filters()</span></code></a></li>
-<li><a class="reference internal" href="#src.repository.search_filter.search_photos"><code class="docutils literal notranslate"><span class="pre">search_photos()</span></code></a></li>
-<li><a class="reference internal" href="#src.repository.search_filter.search_photos_by_user"><code class="docutils literal notranslate"><span class="pre">search_photos_by_user()</span></code></a></li>
+<li><a class="reference internal" href="#src.repository.search_filter.get_description"><code class="docutils literal notranslate"><span class="pre">get_description()</span></code></a></li>
+<li><a class="reference internal" href="#src.repository.search_filter.get_tag"><code class="docutils literal notranslate"><span class="pre">get_tag()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-src.repository.tags">fastapi_app src repository Tags</a><ul>
@@ -2475,8 +2584,8 @@ The file is saved with a unique name generated using UUID to avoid conflicts.</p
 </ul>
 </li>
 <li><a class="reference internal" href="#module-src.routes.search_filter">fastapi_app src routes Search_filter</a><ul>
-<li><a class="reference internal" href="#src.routes.search_filter.search_photos"><code class="docutils literal notranslate"><span class="pre">search_photos()</span></code></a></li>
-<li><a class="reference internal" href="#src.routes.search_filter.search_photos_by_user"><code class="docutils literal notranslate"><span class="pre">search_photos_by_user()</span></code></a></li>
+<li><a class="reference internal" href="#src.routes.search_filter.get_photo_by_description"><code class="docutils literal notranslate"><span class="pre">get_photo_by_description()</span></code></a></li>
+<li><a class="reference internal" href="#src.routes.search_filter.get_photo_by_tag"><code class="docutils literal notranslate"><span class="pre">get_photo_by_tag()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-src.routes.users">fastapi_app src routes Users</a><ul>
@@ -2550,6 +2659,21 @@ The file is saved with a unique name generated using UUID to avoid conflicts.</p
 </li>
 <li><a class="reference internal" href="#src.schemas.CommentCreate"><code class="docutils literal notranslate"><span class="pre">CommentCreate</span></code></a></li>
 <li><a class="reference internal" href="#src.schemas.CommentUpdate"><code class="docutils literal notranslate"><span class="pre">CommentUpdate</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch</span></code></a><ul>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.Config"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.Config</span></code></a><ul>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.Config.orm_mode"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.Config.orm_mode</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.created_at"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.created_at</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.description"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.description</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.id"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.id</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.rating"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.rating</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.tags"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.tags</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.updated_at"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.updated_at</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.url"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.url</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.DescriptionSearch.user_id"><code class="docutils literal notranslate"><span class="pre">DescriptionSearch.user_id</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#src.schemas.Photo"><code class="docutils literal notranslate"><span class="pre">Photo</span></code></a><ul>
 <li><a class="reference internal" href="#src.schemas.Photo.Config"><code class="docutils literal notranslate"><span class="pre">Photo.Config</span></code></a><ul>
 <li><a class="reference internal" href="#src.schemas.Photo.Config.orm_mode"><code class="docutils literal notranslate"><span class="pre">Photo.Config.orm_mode</span></code></a></li>
@@ -2567,15 +2691,6 @@ The file is saved with a unique name generated using UUID to avoid conflicts.</p
 </ul>
 </li>
 <li><a class="reference internal" href="#src.schemas.PhotoCreate"><code class="docutils literal notranslate"><span class="pre">PhotoCreate</span></code></a></li>
-<li><a class="reference internal" href="#src.schemas.PhotoSearch"><code class="docutils literal notranslate"><span class="pre">PhotoSearch</span></code></a><ul>
-<li><a class="reference internal" href="#src.schemas.PhotoSearch.end_date"><code class="docutils literal notranslate"><span class="pre">PhotoSearch.end_date</span></code></a></li>
-<li><a class="reference internal" href="#src.schemas.PhotoSearch.keywords"><code class="docutils literal notranslate"><span class="pre">PhotoSearch.keywords</span></code></a></li>
-<li><a class="reference internal" href="#src.schemas.PhotoSearch.max_rating"><code class="docutils literal notranslate"><span class="pre">PhotoSearch.max_rating</span></code></a></li>
-<li><a class="reference internal" href="#src.schemas.PhotoSearch.min_rating"><code class="docutils literal notranslate"><span class="pre">PhotoSearch.min_rating</span></code></a></li>
-<li><a class="reference internal" href="#src.schemas.PhotoSearch.start_date"><code class="docutils literal notranslate"><span class="pre">PhotoSearch.start_date</span></code></a></li>
-<li><a class="reference internal" href="#src.schemas.PhotoSearch.tags"><code class="docutils literal notranslate"><span class="pre">PhotoSearch.tags</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#src.schemas.ProfileResponse"><code class="docutils literal notranslate"><span class="pre">ProfileResponse</span></code></a><ul>
 <li><a class="reference internal" href="#src.schemas.ProfileResponse.Config"><code class="docutils literal notranslate"><span class="pre">ProfileResponse.Config</span></code></a><ul>
 <li><a class="reference internal" href="#src.schemas.ProfileResponse.Config.orm_mode"><code class="docutils literal notranslate"><span class="pre">ProfileResponse.Config.orm_mode</span></code></a></li>
@@ -2597,6 +2712,21 @@ The file is saved with a unique name generated using UUID to avoid conflicts.</p
 </li>
 <li><a class="reference internal" href="#src.schemas.RequestEmail"><code class="docutils literal notranslate"><span class="pre">RequestEmail</span></code></a><ul>
 <li><a class="reference internal" href="#src.schemas.RequestEmail.email"><code class="docutils literal notranslate"><span class="pre">RequestEmail.email</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.schemas.TagSearch"><code class="docutils literal notranslate"><span class="pre">TagSearch</span></code></a><ul>
+<li><a class="reference internal" href="#src.schemas.TagSearch.Config"><code class="docutils literal notranslate"><span class="pre">TagSearch.Config</span></code></a><ul>
+<li><a class="reference internal" href="#src.schemas.TagSearch.Config.orm_mode"><code class="docutils literal notranslate"><span class="pre">TagSearch.Config.orm_mode</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.schemas.TagSearch.created_at"><code class="docutils literal notranslate"><span class="pre">TagSearch.created_at</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.TagSearch.description"><code class="docutils literal notranslate"><span class="pre">TagSearch.description</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.TagSearch.id"><code class="docutils literal notranslate"><span class="pre">TagSearch.id</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.TagSearch.rating"><code class="docutils literal notranslate"><span class="pre">TagSearch.rating</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.TagSearch.tags"><code class="docutils literal notranslate"><span class="pre">TagSearch.tags</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.TagSearch.updated_at"><code class="docutils literal notranslate"><span class="pre">TagSearch.updated_at</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.TagSearch.url"><code class="docutils literal notranslate"><span class="pre">TagSearch.url</span></code></a></li>
+<li><a class="reference internal" href="#src.schemas.TagSearch.user_id"><code class="docutils literal notranslate"><span class="pre">TagSearch.user_id</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#src.schemas.TokenModel"><code class="docutils literal notranslate"><span class="pre">TokenModel</span></code></a><ul>
