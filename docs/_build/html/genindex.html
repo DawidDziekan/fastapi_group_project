@@ -43,7 +43,6 @@
  | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
- | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
@@ -65,12 +64,10 @@
 </li>
       <li><a href="index.html#src.services.auth.Auth.ALGORITHM">ALGORITHM (src.services.auth.Auth attribute)</a>
 </li>
-      <li><a href="index.html#src.repository.search_filter.apply_filters">apply_filters() (in module src.repository.search_filter)</a>
+      <li><a href="index.html#src.services.auth.Auth">Auth (class in src.services.auth)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#src.services.auth.Auth">Auth (class in src.services.auth)</a>
-</li>
       <li><a href="index.html#src.database.models.User.avatar">avatar (src.database.models.User attribute)</a>
 
       <ul>
@@ -168,9 +165,13 @@
 </li>
         <li><a href="index.html#src.schemas.Comment.created_at">(src.schemas.Comment attribute)</a>
 </li>
+        <li><a href="index.html#src.schemas.DescriptionSearch.created_at">(src.schemas.DescriptionSearch attribute)</a>
+</li>
         <li><a href="index.html#src.schemas.Photo.created_at">(src.schemas.Photo attribute)</a>
 </li>
         <li><a href="index.html#src.schemas.ProfileResponse.created_at">(src.schemas.ProfileResponse attribute)</a>
+</li>
+        <li><a href="index.html#src.schemas.TagSearch.created_at">(src.schemas.TagSearch attribute)</a>
 </li>
         <li><a href="index.html#src.schemas.UserDb.created_at">(src.schemas.UserDb attribute)</a>
 </li>
@@ -197,16 +198,24 @@
         <li><a href="index.html#src.services.storage.delete_photo">(in module src.services.storage)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#src.routes.users.delete_user">delete_user() (in module src.routes.users)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#src.database.models.Photo.description">description (src.database.models.Photo attribute)</a>
 
       <ul>
+        <li><a href="index.html#src.schemas.DescriptionSearch.description">(src.schemas.DescriptionSearch attribute)</a>
+</li>
         <li><a href="index.html#src.schemas.PhotoBase.description">(src.schemas.PhotoBase attribute)</a>
 </li>
+        <li><a href="index.html#src.schemas.TagSearch.description">(src.schemas.TagSearch attribute)</a>
+</li>
       </ul></li>
+      <li><a href="index.html#src.schemas.DescriptionSearch">DescriptionSearch (class in src.schemas)</a>
+</li>
+      <li><a href="index.html#src.schemas.DescriptionSearch.Config">DescriptionSearch.Config (class in src.schemas)</a>
+</li>
       <li><a href="index.html#src.schemas.UserResponse.detail">detail (src.schemas.UserResponse attribute)</a>
 </li>
   </ul></td>
@@ -229,8 +238,6 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#src.schemas.PhotoSearch.end_date">end_date (src.schemas.PhotoSearch attribute)</a>
-</li>
       <li><a href="index.html#src.conf.config.Settings.Config.env_file">env_file (src.conf.config.Settings.Config attribute)</a>
 </li>
       <li><a href="index.html#src.conf.config.Settings.Config.env_file_encoding">env_file_encoding (src.conf.config.Settings.Config attribute)</a>
@@ -251,15 +258,23 @@
 </li>
       <li><a href="index.html#src.database.db.get_db">get_db() (in module src.database.db)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#src.repository.search_filter.get_description">get_description() (in module src.repository.search_filter)</a>
+</li>
       <li><a href="index.html#src.services.auth.Auth.get_email_from_token">get_email_from_token() (src.services.auth.Auth method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#src.services.auth.Auth.get_password_hash">get_password_hash() (src.services.auth.Auth method)</a>
 </li>
       <li><a href="index.html#src.services.storage.get_photo">get_photo() (in module src.services.storage)</a>
 </li>
+      <li><a href="index.html#src.routes.search_filter.get_photo_by_description">get_photo_by_description() (in module src.routes.search_filter)</a>
+</li>
+      <li><a href="index.html#src.routes.search_filter.get_photo_by_tag">get_photo_by_tag() (in module src.routes.search_filter)</a>
+</li>
       <li><a href="index.html#src.repository.users.get_profile">get_profile() (in module src.repository.users)</a>
+</li>
+      <li><a href="index.html#src.repository.search_filter.get_tag">get_tag() (in module src.repository.search_filter)</a>
 </li>
       <li><a href="index.html#src.repository.users.get_user_by_email">get_user_by_email() (in module src.repository.users)</a>
 </li>
@@ -284,19 +299,15 @@
 </li>
         <li><a href="index.html#src.schemas.Comment.id">(src.schemas.Comment attribute)</a>
 </li>
+        <li><a href="index.html#src.schemas.DescriptionSearch.id">(src.schemas.DescriptionSearch attribute)</a>
+</li>
         <li><a href="index.html#src.schemas.Photo.id">(src.schemas.Photo attribute)</a>
+</li>
+        <li><a href="index.html#src.schemas.TagSearch.id">(src.schemas.TagSearch attribute)</a>
 </li>
         <li><a href="index.html#src.schemas.UserDb.id">(src.schemas.UserDb attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-</tr></table>
-
-<h2 id="K">K</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#src.schemas.PhotoSearch.keywords">keywords (src.schemas.PhotoSearch attribute)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -328,10 +339,6 @@
         <li><a href="index.html#module-main">module</a>
 </li>
       </ul></li>
-      <li><a href="index.html#src.schemas.PhotoSearch.max_rating">max_rating (src.schemas.PhotoSearch attribute)</a>
-</li>
-      <li><a href="index.html#src.schemas.PhotoSearch.min_rating">min_rating (src.schemas.PhotoSearch attribute)</a>
-</li>
       <li>
     module
 
@@ -394,9 +401,13 @@
       <li><a href="index.html#src.schemas.Comment.Config.orm_mode">orm_mode (src.schemas.Comment.Config attribute)</a>
 
       <ul>
+        <li><a href="index.html#src.schemas.DescriptionSearch.Config.orm_mode">(src.schemas.DescriptionSearch.Config attribute)</a>
+</li>
         <li><a href="index.html#src.schemas.Photo.Config.orm_mode">(src.schemas.Photo.Config attribute)</a>
 </li>
         <li><a href="index.html#src.schemas.ProfileResponse.Config.orm_mode">(src.schemas.ProfileResponse.Config attribute)</a>
+</li>
+        <li><a href="index.html#src.schemas.TagSearch.Config.orm_mode">(src.schemas.TagSearch.Config attribute)</a>
 </li>
         <li><a href="index.html#src.schemas.UserDb.Config.orm_mode">(src.schemas.UserDb.Config attribute)</a>
 </li>
@@ -443,8 +454,6 @@
 </li>
       <li><a href="index.html#src.database.models.User.photos">photos (src.database.models.User attribute)</a>
 </li>
-      <li><a href="index.html#src.schemas.PhotoSearch">PhotoSearch (class in src.schemas)</a>
-</li>
       <li><a href="index.html#src.services.photo_service.PhotoService">PhotoService (class in src.services.photo_service)</a>
 </li>
       <li><a href="index.html#src.schemas.ProfileResponse">ProfileResponse (class in src.schemas)</a>
@@ -464,7 +473,13 @@
       <li><a href="index.html#src.services.auth.Auth.r">r (src.services.auth.Auth attribute)</a>
 </li>
       <li><a href="index.html#src.database.models.Photo.rating">rating (src.database.models.Photo attribute)</a>
+
+      <ul>
+        <li><a href="index.html#src.schemas.DescriptionSearch.rating">(src.schemas.DescriptionSearch attribute)</a>
 </li>
+        <li><a href="index.html#src.schemas.TagSearch.rating">(src.schemas.TagSearch attribute)</a>
+</li>
+      </ul></li>
       <li><a href="index.html#src.routes.users.read_all_users">read_all_users() (in module src.routes.users)</a>
 </li>
       <li><a href="index.html#src.routes.comments.read_comment">read_comment() (in module src.routes.comments)</a>
@@ -477,10 +492,10 @@
 </li>
       <li><a href="index.html#src.routes.users.read_users_me">read_users_me() (in module src.routes.users)</a>
 </li>
-      <li><a href="index.html#src.conf.config.Settings.redis_host">redis_host (src.conf.config.Settings attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#src.conf.config.Settings.redis_host">redis_host (src.conf.config.Settings attribute)</a>
+</li>
       <li><a href="index.html#src.conf.config.Settings.redis_password">redis_password (src.conf.config.Settings attribute)</a>
 </li>
       <li><a href="index.html#src.conf.config.Settings.redis_port">redis_port (src.conf.config.Settings attribute)</a>
@@ -517,18 +532,6 @@
 
       <ul>
         <li><a href="index.html#src.services.storage.save_photo">(in module src.services.storage)</a>
-</li>
-      </ul></li>
-      <li><a href="index.html#src.repository.search_filter.search_photos">search_photos() (in module src.repository.search_filter)</a>
-
-      <ul>
-        <li><a href="index.html#src.routes.search_filter.search_photos">(in module src.routes.search_filter)</a>
-</li>
-      </ul></li>
-      <li><a href="index.html#src.repository.search_filter.search_photos_by_user">search_photos_by_user() (in module src.repository.search_filter)</a>
-
-      <ul>
-        <li><a href="index.html#src.routes.search_filter.search_photos_by_user">(in module src.routes.search_filter)</a>
 </li>
       </ul></li>
       <li><a href="index.html#src.conf.config.Settings.secret_key">secret_key (src.conf.config.Settings attribute)</a>
@@ -666,8 +669,6 @@
         <li><a href="index.html#module-src.services.storage">module</a>
 </li>
       </ul></li>
-      <li><a href="index.html#src.schemas.PhotoSearch.start_date">start_date (src.schemas.PhotoSearch attribute)</a>
-</li>
       <li><a href="index.html#main.startup">startup() (in module main)</a>
 </li>
   </ul></td>
@@ -681,13 +682,19 @@
       <li><a href="index.html#src.database.models.Photo.tags">tags (src.database.models.Photo attribute)</a>
 
       <ul>
+        <li><a href="index.html#src.schemas.DescriptionSearch.tags">(src.schemas.DescriptionSearch attribute)</a>
+</li>
         <li><a href="index.html#src.schemas.PhotoBase.tags">(src.schemas.PhotoBase attribute)</a>
 </li>
-        <li><a href="index.html#src.schemas.PhotoSearch.tags">(src.schemas.PhotoSearch attribute)</a>
+        <li><a href="index.html#src.schemas.TagSearch.tags">(src.schemas.TagSearch attribute)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#src.schemas.TagSearch">TagSearch (class in src.schemas)</a>
+</li>
+      <li><a href="index.html#src.schemas.TagSearch.Config">TagSearch.Config (class in src.schemas)</a>
+</li>
       <li><a href="index.html#src.schemas.TokenModel.token_type">token_type (src.schemas.TokenModel attribute)</a>
 </li>
       <li><a href="index.html#src.schemas.TokenModel">TokenModel (class in src.schemas)</a>
@@ -731,15 +738,25 @@
 </li>
         <li><a href="index.html#src.schemas.Comment.updated_at">(src.schemas.Comment attribute)</a>
 </li>
+        <li><a href="index.html#src.schemas.DescriptionSearch.updated_at">(src.schemas.DescriptionSearch attribute)</a>
+</li>
+        <li><a href="index.html#src.schemas.TagSearch.updated_at">(src.schemas.TagSearch attribute)</a>
+</li>
       </ul></li>
       <li><a href="index.html#src.database.models.Photo.url">url (src.database.models.Photo attribute)</a>
 
       <ul>
+        <li><a href="index.html#src.schemas.DescriptionSearch.url">(src.schemas.DescriptionSearch attribute)</a>
+</li>
         <li><a href="index.html#src.schemas.PhotoBase.url">(src.schemas.PhotoBase attribute)</a>
+</li>
+        <li><a href="index.html#src.schemas.TagSearch.url">(src.schemas.TagSearch attribute)</a>
 </li>
       </ul></li>
       <li><a href="index.html#src.database.models.User">User (class in src.database.models)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#src.database.models.Comment.user">user (src.database.models.Comment attribute)</a>
 
       <ul>
@@ -748,8 +765,6 @@
         <li><a href="index.html#src.schemas.UserResponse.user">(src.schemas.UserResponse attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#src.database.models.Comment.user_id">user_id (src.database.models.Comment attribute)</a>
 
       <ul>
@@ -761,7 +776,11 @@
 </li>
         <li><a href="index.html#src.schemas.Comment.user_id">(src.schemas.Comment attribute)</a>
 </li>
+        <li><a href="index.html#src.schemas.DescriptionSearch.user_id">(src.schemas.DescriptionSearch attribute)</a>
+</li>
         <li><a href="index.html#src.schemas.Photo.user_id">(src.schemas.Photo attribute)</a>
+</li>
+        <li><a href="index.html#src.schemas.TagSearch.user_id">(src.schemas.TagSearch attribute)</a>
 </li>
         <li><a href="index.html#src.schemas.UserSearch.user_id">(src.schemas.UserSearch attribute)</a>
 </li>
