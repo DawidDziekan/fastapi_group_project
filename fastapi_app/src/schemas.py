@@ -175,17 +175,38 @@ class Photo(PhotoBase):
         orm_mode = True
 
 
-class PhotoSearch(BaseModel):
+class DescriptionSearch(BaseModel):
     """
-    Photo Search Model: 
+    DescriptionSearch Model: 
 
     """
-    keywords: Optional[str] = None
-    tags: Optional[List[str]] = None
-    min_rating: Optional[float] = None
-    max_rating: Optional[float] = None
-    start_date: Optional[datetime] = None
-    end_date: Optional[datetime] = None
+    id: int
+    user_id: int
+    url: str
+    description: str
+    tags: list
+    created_at: datetime | None
+    updated_at: datetime | None
+    rating: int | None
+    class Config:
+        orm_mode = True
+ 
+class TagSearch(BaseModel):
+    """
+    TagSearch Model: 
+
+    """
+    id: int
+    user_id: int
+    url: str | None
+    description: str | None
+    tags: list | None
+    created_at: datetime | None
+    updated_at: datetime | None
+    rating: int | None
+    class Config:
+        orm_mode = True
+
 
 
 class UserSearch(BaseModel):
@@ -239,3 +260,4 @@ class ProfileStatusUpdate(BaseModel):
     username: str
     password: str
     avatar: str
+

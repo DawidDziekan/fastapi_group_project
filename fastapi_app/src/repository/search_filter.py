@@ -1,63 +1,66 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
-
+from fastapi_app.src.database.models import Photo
 from fastapi_app.src.database import models
 from fastapi_app.src import schemas
+from datetime import datetime
+from fastapi import HTTPException
 
 
-def apply_filters(query, search: schemas.PhotoSearch):
+async def get_description(db: Session, description: str,rating_filter:int = None, created_at: str = None):
     """
-    Apply various filters to the photo query based on search criteria.
-
-    :param query: The initial query object.
-    :type query: Session.query
-    :param search: The search criteria.
-    :type search: schemas.PhotoSearch
-    :return: The query object with applied filters.
-    :rtype: Session.query
-    """
-    if search.keywords != 'string':
-        query = query.filter(or_(
-            models.Photo.description.ilike(f"%{search.keywords}%"),
-            models.Photo.tags.any(models.Tag.name.ilike(f"%{search.keywords}%"))
-        ))      
-    if search.tags != ["string"]:
-        query = query.filter(models.Photo.tags.any(models.Tag.name.in_(search.tags)))
-    if search.min_rating != 0:
-        query = query.filter(models.Photo.rating >= search.min_rating)
-    if search.max_rating != 0:
-        query = query.filter(models.Photo.rating <= search.max_rating)
-    if search.start_date:
-        query = query.filter(models.Photo.created_at >= search.start_date)
-    if search.end_date:
-        query = query.filter(models.Photo.created_at <= search.end_date)
-    return query
-
-async def search_photos(db: Session, search: schemas.PhotoSearch):
-    """
-    Search photos based on various criteria.
+    Retrieve one or more photos from the database based on their descriptions.
 
     :param db: The database session.
     :type db: Session
-    :param search: The search criteria.
-    :type search: schemas.PhotoSearch
-    :return: A list of photos matching the search criteria.
-    :rtype: List
+    :param description: The description to search for (case-insensitive).
+    :type description: str
+    :return: A list of Photo objects matching the specified description, or an empty list if none found.
+    :rtype: List[models.Photo]
     """
-    query = db.query(models.Photo)
-    query = apply_filters(query, search)
-    return query.all()
+    if rating_filter and created_at:
+        raise HTTPException(status_code=400, detail="Choose only one filter parameter at once. Rating or created_at")
+    
+    query = db.query(models.Photo).filter(models.Photo.description.ilike(f'%{description}%')).first()
+    print(query)
+    if query:
+        id = query.id
+    if query and rating_filter:
+         query2 = db.query(models.Photo).filter(models.Photo.id==id).filter(models.Photo.rating == rating_filter).all()
+    elif query and created_at:
+        query2 = db.query(models.Photo).filter(models.Photo.id==id).all()
+        query2 = [q for q in query2 if str(q.created_at)[0:10] == created_at]
+    elif query:
+        query2 = db.query(models.Photo).filter(models.Photo.description.ilike(f'%{description}%')).all()              
+    else:
+        raise HTTPException(status_code=400, detail="description does not exist")
+    return query2
 
-async def search_photos_by_user(db: Session, user_id: int):
+async def get_tag(db: Session, tagname: str, rating_filter:int = None, created_at: str = None):
     """
-    Search photos by a specific user.
+    Retrieve one or more photos from the database based on their tag.
 
     :param db: The database session.
     :type db: Session
-    :param user_id: The ID of the user.
-    :type user_id: int
-    :return: A list of photos uploaded by the specified user.
-    :rtype: List
+    :param tagname: The tag to search for.
+    :type tagname: str
+    :return: A list of Photo objects matching the specified tagname.
+    :rtype: List[models.Photo]
     """
-    query = db.query(models.Photo).filter(models.Photo.user_id == user_id)
-    return query.all()
+    if rating_filter and created_at:
+        raise HTTPException(status_code=400, detail="Choose only one filter parameter at once. Rating or created_at")
+    
+    query = db.query(models.Tag).filter(models.Tag.name.ilike(tagname)).first()
+    if query:
+        id = query.id
+    if query and rating_filter:
+        query2 = db.query(models.Photo).filter(models.Photo.tags.any(id=id)).filter(models.Photo.rating == rating_filter).all()
+    elif query and created_at:
+        query2 = db.query(models.Photo).filter(models.Photo.tags.any(id=id)).all()
+        query2 = [q for q in query2 if str(q.created_at)[0:10] == created_at]
+    elif query:
+        query2 = db.query(models.Photo).filter(models.Photo.tags.any(id=id)).all()                  
+    else:
+        raise HTTPException(status_code=400, detail="Tag does not exist")
+    return query2
+
