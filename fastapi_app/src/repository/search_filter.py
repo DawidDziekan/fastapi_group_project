@@ -15,8 +15,13 @@ async def get_description(db: Session, description: str,rating_filter:int = None
     :type db: Session
     :param description: The description to search for (case-insensitive).
     :type description: str
-    :return: A list of Photo objects matching the specified description, or an empty list if none found.
+    :param rating_filter: The rating of search photo.
+    :type: int
+    :param created_at: The date of search photo creation.
+    :type created_at: str
+    :return: A list of Photo objects matching the specified description or photo objects with its rating or its creation date. .
     :rtype: List[models.Photo]
+    :raises HTTPException: If the photo is not found, or the photo with selected rating or creation date is not found, raises a 404 error with the detail message.
     """
     if rating_filter and created_at:
         raise HTTPException(status_code=400, detail="Choose only one filter parameter at once. Rating or created_at")
@@ -44,8 +49,13 @@ async def get_tag(db: Session, tagname: str, rating_filter:int = None, created_a
     :type db: Session
     :param tagname: The tag to search for.
     :type tagname: str
+    :param rating_filter: The rating of search photo.
+    :type: int
+    :param created_at: The date of search photo creation.
+    :type created_at: str
     :return: A list of Photo objects matching the specified tagname.
     :rtype: List[models.Photo]
+    :raises HTTPException: If the photo is not found, or the photo with selected rating or creation date is not found, raises a 404 error with the detail message.
     """
     if rating_filter and created_at:
         raise HTTPException(status_code=400, detail="Choose only one filter parameter at once. Rating or created_at")
