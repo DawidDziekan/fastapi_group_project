@@ -76,3 +76,11 @@ def test_read_photo_authorized_by_tag_and_rating(client, token):
     response = client.get('http://localhost:8000/api/search_filter/photos/search/tag/pretty?rating_filter=0')
     headers={"Authorization": f"Bearer {token}"}
     assert response.status_code == 200, response.text
+
+def test_read_photo_authorized_by_tag_and_created_date(client, token):
+    """
+    Test about reading photo by tag and photo created date
+    """
+    response = client.get('http://localhost:8000/api/search_filter/photos/search/tag/pretty?created_at=2024-07-29')
+    headers={"Authorization": f"Bearer {token}"}
+    assert response.status_code == 200, response.text
