@@ -160,6 +160,7 @@ class PhotoCreate(PhotoBase):
 class Photo(PhotoBase):
     """
     Photo Model
+
     :param id: photo's id numeber
     :type id: int
     :param user_id: user id number
@@ -178,6 +179,7 @@ class Photo(PhotoBase):
 class DescriptionSearch(BaseModel):
     """
     DescriptionSearch Model: 
+    
     :param id: photo's id number
     :type id: int
     :param user_id: user's id numeber

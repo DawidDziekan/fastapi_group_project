@@ -7,7 +7,7 @@ from fastapi_app.main import app
 from fastapi_app.src.database.models import Base
 from fastapi_app.src.database.db import get_db
 from fastapi_app.src.conf.config import settings
-from fastapi_app.src.database.models import User
+from fastapi_app.src.database.models import User, Photo
 
 SQLALCHEMY_DATABASE_URL = settings.sqlalchemy_database_url
 
@@ -55,3 +55,23 @@ def create_test_user(session, user):
     session.refresh(db_user)
     return db_user
 
+# @pytest.fixture(scope="module")
+# def photo():
+#     return {"id":1, "url": "uploads/f5922740-e714-4983-b190-f23511e2fbe8.jpeg","user_id": 1,"description":"water","created_at":"2024-07-29T09:14:47.702008","updated_at":"2024-07-29T09:14:58.702008","rating":0}
+
+
+# @pytest.fixture(scope="module")
+# def create_test_photo(session, photo):
+#     db_photo = Photo(
+#         id=photo['id'],
+#         url=photo['url'],
+#         user_id=photo['user_id'],
+#         description =photo['description'],
+#         created_at =photo['created_at'],
+#         updated_at =photo['updated_at'],
+#         rating =photo['rating']
+#     )
+#     session.add(db_photo)
+#     session.commit()
+#     session.refresh(db_photo)
+#     return db_photo

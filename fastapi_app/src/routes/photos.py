@@ -36,7 +36,7 @@ async def save_photo(file: UploadFile) -> str:
     
     return file_path
 
-@router.post("/photos/")
+@router.post("/photos/", status_code=201)
 async def create_photo(description: str, tags: Optional[str] = None, file: UploadFile = File(...), current_user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
     """
     Create a new photo.

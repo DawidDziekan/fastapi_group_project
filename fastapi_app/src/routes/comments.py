@@ -11,7 +11,7 @@ from fastapi_app.src.services.auth import auth_service
 router = APIRouter(prefix="/comments", tags=["comments"])
 # router = APIRouter()
 
-@router.post("/photos/{photo_id}/comments/", response_model=schemas.Comment)
+@router.post("/photos/{photo_id}/comments/", response_model=schemas.Comment, status_code=201)
 async def create_comment_for_photo(
     photo_id: int,
     comment: schemas.CommentCreate,
